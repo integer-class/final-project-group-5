@@ -5,14 +5,6 @@ require_once '../app/config/Connection.php';
 use config\Connection;
 
 class ProductModel {
-    private $product_id;
-    private $product_name;
-    private $supplier_name;
-    private $description;
-    private $category;
-    private $stock;
-    private $buy_price;
-    private $sell_price;
     private $connect;
 
     public function __construct() {
@@ -24,14 +16,6 @@ class ProductModel {
         $query = "SELECT * FROM Product";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $this->product_id = $row['product_id'] ?? null;
-        $this->product_name = $row['product_name'] ?? null;
-        $this->supplier_name = $row['supplier_name'] ?? null;
-        $this->description = $row['description'] ?? null;
-        $this->category = $row['category'] ?? null;
-        $this->stock = $row['stock'] ?? null;
-        $this->buy_price = $row['buy_price'] ?? null;
-        $this->sell_price = $row['sell_price'] ?? null;
         return $row;
     }
 

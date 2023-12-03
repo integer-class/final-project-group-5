@@ -5,13 +5,6 @@ require_once '../app/config/Connection.php';
 use config\Connection;
 
 class UserModel {
-    private $user_id;
-    private $username;
-    private $password;
-    private $email;
-    private $role;
-    private $address;
-    private $phone_number;
     private $connect;
 
     public function __construct() {
@@ -23,14 +16,6 @@ class UserModel {
         $query = "SELECT * FROM User WHERE username = '$username' AND password = '$password'";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_assoc($result);
-
-        $this->user_id = $row['user_id'] ?? null;
-        $this->username = $row['username'] ?? null;
-        $this->password = $row['password'] ?? null;
-        $this->email = $row['email'] ?? null;
-        $this->role = $row['role'] ?? null;
-        $this->address = $row['address'] ?? null;
-        $this->phone_number = $row['phone_number'] ?? null;
         
         return $row;
     }
