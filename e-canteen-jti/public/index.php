@@ -1,10 +1,10 @@
 <?php
 
-require_once '../app/app/Router.php';
+require_once '../app/config/Router.php';
 require_once '../app/controllers/LoginController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/CashierController.php';
-use app\Router;
+use config\Router;
 use controllers\LoginController;
 use controllers\AdminController;
 use controllers\CashierController;
