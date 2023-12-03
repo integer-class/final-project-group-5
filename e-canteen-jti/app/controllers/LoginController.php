@@ -13,7 +13,7 @@ class LoginController {
         $userModel = new UserModel();
         $username = $_POST['username'];
         $password = md5($_POST['password']);
-        $userData = $userModel->getUserData($username, $password);
+        $userData = $userModel->getUserDataLogin($username, $password);
         $role = $userData['role'];
         
         if ($role === 'admin') {
