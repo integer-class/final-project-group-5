@@ -5,11 +5,14 @@ include "templates/navbar.php";
 
 ?>
     <h2>Edit Product</h2>
-    <form action="/admin/editProduct" method="post">
+    <form action="/admin/editProduct" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="product_id" value="<?php echo $productData['product_id']; ?>">
         <label for="product_name">Product Name:</label>
         <input type="text" name="product_name" id="product_name" placeholder="Product Name" required value="<?php echo $productData['product_name']; ?>"><br><br>
+
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image" required><br><br>
         
         <label for="supplier_name">Supplier Name:</label>
         <input type="text" name="supplier_name" id="supplier_name" placeholder="Supplier Name" required value="<?php echo $productData['supplier_name']; ?>"><br><br>

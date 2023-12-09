@@ -15,6 +15,7 @@ class Product extends MasterData {
     private $stock;
     private $buy_price;
     private $sell_price;
+    private $image;
     private $connect;
 
     public function __construct() {
@@ -30,17 +31,17 @@ class Product extends MasterData {
     }
 
     public function create($data) {
-        $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'sssssss', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['sell_price']);
+        mysqli_stmt_bind_param($statement, 'ssssssss', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['sell_price'], $data['image']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
     public function update($data) {
-        $query = "UPDATE Product SET product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ? WHERE product_id = ?";
+        $query = "UPDATE Product SET product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ?, image = ? WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'sssssssi', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['buy_price'], $data['product_id']);
+        mysqli_stmt_bind_param($statement, 'ssssssssi', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['buy_price'], $data['image'], $data['product_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }

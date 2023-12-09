@@ -21,6 +21,7 @@ $route->add('GET', '/admin/user', Admin::class, 'renderUser');
 $route->add('GET', '/admin/product', Admin::class, 'renderProduct');
 $route->add('GET', '/admin/createProduct', Admin::class, 'renderCreateProduct');
 $route->add('GET', '/admin/editProduct', Admin::class, 'renderEditProduct');
+$route->add('GET', '/admin/detailProduct', Admin::class, 'renderDetailProduct');
 $route->add('GET', '/admin/createUser', Admin::class, 'renderCreateUser');
 $route->add('GET', '/admin/editUser', Admin::class, 'renderEditUser');
 
@@ -35,7 +36,8 @@ $route->add('POST', '/admin/editProduct', Admin::class, 'editProduct');
 $route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
 
 //cashier
-$route->add('GET', '/cashier/home', Cashier::class, 'cashierHome');
+$route->add('GET', '/cashier/home', Cashier::class, 'renderHome');
+$route->add('GET', '/cashier/cart', Cashier::class, 'renderCart');
 
 //run route
 $route->run();

@@ -6,9 +6,12 @@ include "templates/navbar.php";
 ?>
     
     <h2>Add Product</h2>
-    <form action="/admin/createProduct" method="post">
+    <form action="/admin/createProduct" method="post" enctype="multipart/form-data">
         <label for="product_name">Product Name:</label><br>
         <input type="text" name="product_name" id="product_name" placeholder="Product Name" required><br><br>
+
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image"><br><br>
         
         <label for="supplier_name">Supplier Name:</label><br>
         <input type="text" name="supplier_name" id="supplier_name" placeholder="Supplier Name" required><br><br>

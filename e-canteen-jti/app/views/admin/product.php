@@ -62,6 +62,7 @@ include "templates/navbar.php";
                     echo "<td>Rp".$product['buy_price']."</td>";
                     echo "<td>Rp".$product['sell_price']."</td>";
                     echo "<td class='action-btns'>";
+                    echo "<button onclick=\"window.location.href='/admin/detailProduct?product_id=".$product['product_id']."'\">Detail</button>";
                     echo "<button onclick=\"window.location.href='/admin/editProduct?product_id=".$product['product_id']."'\">Edit</button>";
                     echo "<form method='post' action='/admin/deleteProduct'>";
                     echo "<input type='hidden' name='product_id' value='".$product['product_id']."'>";

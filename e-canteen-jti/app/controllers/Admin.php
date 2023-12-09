@@ -31,6 +31,26 @@ class Admin {
         require_once '../app/views/admin/productCreate.php';
     }
 
+    public function renderDetailProduct() {
+        $product_id = $_GET['product_id'] ?? null;
+    
+        if (!$product_id) {
+            echo "Product ID not provided.";
+            exit();
+        }
+    
+        $product = new Product();
+        $productData = $product->getDataById($product_id);
+    
+        if ($productData) {
+            require_once '../app/views/admin/productDetail.php';
+        } else {
+            echo "User not found.";
+            exit();
+        }
+        require_once '../app/views/admin/productDetail.php';
+    }
+
     public function renderEditProduct() {
         $product_id = $_GET['product_id'] ?? null;
     
@@ -150,6 +170,31 @@ class Admin {
             $data['stock'] = $_POST['stock'] ?? '';
             $data['buy_price'] = $_POST['buy_price'] ?? '';
             $data['sell_price'] = $_POST['sell_price'] ?? '';
+            $targetDirectory = "/opt/lampp/htdocs/final-project-group-5/e-canteen-jti/public/uploads/";
+            if (!file_exists($targetDirectory)) {
+                mkdir($targetDirectory, 0777, true);
+            }
+            $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
+    
+            $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+            $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+    
+            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+    
+            if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                if (in_array($fileType, $allowedExtensions) && $_FILES["image"]["size"] <= $maxFileSize) {
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                        $data['image'] = $targetFile; // Isi nama file gambar ke variabel $data['image']
+                    }
+                } else {
+                    echo "Invalid file format or file size exceeds limit.";
+                    exit;
+                }
+            } else {
+                // handle error, e.g., set a default image or show an error message
+                echo "File upload error.";
+                exit;
+            }
             
             $result = $product->create($data);
             if ($result) {
@@ -173,6 +218,31 @@ class Admin {
             $data['stock'] = $_POST['stock'] ?? '';
             $data['buy_price'] = $_POST['buy_price'] ?? '';
             $data['sell_price'] = $_POST['sell_price'] ?? '';
+            $targetDirectory = "/opt/lampp/htdocs/final-project-group-5/e-canteen-jti/public/uploads/";
+            if (!file_exists($targetDirectory)) {
+                mkdir($targetDirectory, 0777, true);
+            }
+            $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
+    
+            $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+            $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+    
+            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+    
+            if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                if (in_array($fileType, $allowedExtensions) && $_FILES["image"]["size"] <= $maxFileSize) {
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                        $data['image'] = $targetFile; // Isi nama file gambar ke variabel $data['image']
+                    }
+                } else {
+                    echo "Invalid file format or file size exceeds limit.";
+                    exit;
+                }
+            } else {
+                // handle error, e.g., set a default image or show an error message
+                echo "File upload error.";
+                exit;
+            }
             
             $result = $product->update($data);
             if ($result) {
@@ -183,6 +253,7 @@ class Admin {
             }
         }
     }
+    
 
     public function deleteProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
