@@ -17,13 +17,13 @@ class Admin {
 
     public function renderUser() {
         $user = new User();
-        $user_data = $user->getAllUsers();
+        $user_data = $user->getAll();
         require_once '../app/views/admin/user.php';
     }
 
     public function renderProduct() {
         $product = new Product();
-        $product_data = $product->getAllProducts();
+        $product_data = $product->getAll();
         require_once '../app/views/admin/product.php';
     }
 
@@ -40,7 +40,7 @@ class Admin {
         }
     
         $product = new Product();
-        $productData = $product->getProductById($product_id);
+        $productData = $product->getDataById($product_id);
     
         if ($productData) {
             require_once '../app/views/admin/productEdit.php';
@@ -64,7 +64,7 @@ class Admin {
         }
 
         $user = new User();
-        $userData = $user->getUserById($user_id);
+        $userData = $user->getDataById($user_id);
 
         if ($userData) {
             require_once '../app/views/admin/userEdit.php';
@@ -82,14 +82,14 @@ class Admin {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User();
             
-            $username = $_POST['username'] ?? '';
-            $password = $_POST['password'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $role = $_POST['role'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $phone_number = $_POST['phone_number'] ?? '';
+            $data['username'] = $_POST['username'] ?? '';
+            $data['password'] = $_POST['password'] ?? '';
+            $data['email'] = $_POST['email'] ?? '';
+            $data['role'] = $_POST['role'] ?? '';
+            $data['address'] = $_POST['address'] ?? '';
+            $data['phone_number'] = $_POST['phone_number'] ?? '';
             
-            $result = $user->createUser($username, $password, $email, $role, $address, $phone_number);
+            $result = $user->create($data);
             if ($result) {
                 header('Location: /admin/user');
                 exit;
@@ -103,15 +103,15 @@ class Admin {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User();
             
-            $user_id = $_POST['user_id'] ?? '';
-            $username = $_POST['username'] ?? '';
-            $password = $_POST['password'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $role = $_POST['role'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $phone_number = $_POST['phone_number'] ?? '';
+            $data['user_id'] = $_POST['user_id'] ?? '';
+            $data['username'] = $_POST['username'] ?? '';
+            $data['password'] = $_POST['password'] ?? '';
+            $data['email'] = $_POST['email'] ?? '';
+            $data['role'] = $_POST['role'] ?? '';
+            $data['address'] = $_POST['address'] ?? '';
+            $data['phone_number'] = $_POST['phone_number'] ?? '';
             
-            $result = $user->updateUser($user_id, $username, $password, $email, $role, $address, $phone_number);
+            $result = $user->update($data);
             if ($result) {
                 header('Location: /admin/user');
                 exit;
@@ -127,7 +127,7 @@ class Admin {
             
             $user_id = $_POST['user_id'] ?? '';
             
-            $result = $user->deleteUser($user_id);
+            $result = $user->delete($user_id);
             if ($result) {
                 header('Location: /admin/user');
                 exit;
@@ -143,15 +143,15 @@ class Admin {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
             
-            $product_name = $_POST['product_name'] ?? '';
-            $supplier_name = $_POST['supplier_name'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $category = $_POST['category'] ?? '';
-            $stock = $_POST['stock'] ?? '';
-            $buy_price = $_POST['buy_price'] ?? '';
-            $sell_price = $_POST['sell_price'] ?? '';
+            $data['product_name'] = $_POST['product_name'] ?? '';
+            $data['supplier_name'] = $_POST['supplier_name'] ?? '';
+            $data['description'] = $_POST['description'] ?? '';
+            $data['category'] = $_POST['category'] ?? '';
+            $data['stock'] = $_POST['stock'] ?? '';
+            $data['buy_price'] = $_POST['buy_price'] ?? '';
+            $data['sell_price'] = $_POST['sell_price'] ?? '';
             
-            $result = $product->createProduct($product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price);
+            $result = $product->create($data);
             if ($result) {
                 header('Location: /admin/product');
                 exit;
@@ -165,16 +165,16 @@ class Admin {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
             
-            $product_id = $_POST['product_id'] ?? '';
-            $product_name = $_POST['product_name'] ?? '';
-            $supplier_name = $_POST['supplier_name'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $category = $_POST['category'] ?? '';
-            $stock = $_POST['stock'] ?? '';
-            $buy_price = $_POST['buy_price'] ?? '';
-            $sell_price = $_POST['sell_price'] ?? '';
+            $data['product_id'] = $_POST['product_id'] ?? '';
+            $data['product_name'] = $_POST['product_name'] ?? '';
+            $data['supplier_name'] = $_POST['supplier_name'] ?? '';
+            $data['description'] = $_POST['description'] ?? '';
+            $data['category'] = $_POST['category'] ?? '';
+            $data['stock'] = $_POST['stock'] ?? '';
+            $data['buy_price'] = $_POST['buy_price'] ?? '';
+            $data['sell_price'] = $_POST['sell_price'] ?? '';
             
-            $result = $product->updateProduct($product_id, $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price);
+            $result = $product->update($data);
             if ($result) {
                 header('Location: /admin/product');
                 exit;
@@ -190,7 +190,7 @@ class Admin {
             
             $product_id = $_POST['product_id'] ?? '';
             
-            $result = $product->deleteProduct($product_id);
+            $result = $product->delete($product_id);
             if ($result) {
                 header('Location: /admin/product');
                 exit;

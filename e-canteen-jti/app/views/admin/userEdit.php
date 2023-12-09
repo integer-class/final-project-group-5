@@ -10,7 +10,6 @@ include "templates/navbar.php";
 
         <input type="hidden" name="user_id" value="<?php echo $userData['user_id']; ?>">
 
-
         <label for="username">Username:</label><br>
         <input type="text" name="username" id="username" placeholder="Username" required value="<?php echo $userData['username']; ?>"><br><br>
         

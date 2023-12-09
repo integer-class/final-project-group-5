@@ -3,8 +3,10 @@
 namespace models;
 require_once '../app/config/Connection.php';
 use config\Connection;
+require_once 'MasterData.php';
+use models\MasterData;
 
-class User {
+class User extends MasterData {
     private $user_id;
     private $username;
     private $password;
@@ -30,30 +32,30 @@ class User {
         return $row;
     }
 
-    public function getAllUsers() {
+    public function getAll() {
         $query = "SELECT * FROM User";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $row;
     }
 
-    public function createUser($username, $password, $email, $role, $address, $phone_number) {
+    public function create($data) {
         $query = "INSERT INTO User (username, password, email, role, address, phone_number) VALUES (?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'ssssss', $username, $password, $email, $role, $address, $phone_number);
+        mysqli_stmt_bind_param($statement, 'ssssss', $data['username'], $data['password'], $data['email'], $data['role'], $data['address'], $data['phone_number']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
-    public function updateUser($user_id, $username, $password, $email, $role, $address, $phone_number) {
+    public function update($data) {
         $query = "UPDATE User SET username = ?, password = ?, email = ?, role = ?, address = ?, phone_number = ? WHERE user_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'ssssssi', $username, $password, $email, $role, $address, $phone_number, $user_id);
+        mysqli_stmt_bind_param($statement, 'ssssssi', $data['username'], $data['password'], $data['email'], $data['role'], $data['address'], $data['phone_number'], $data['user_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
-    public function deleteUser($user_id) {
+    public function delete($user_id) {
         $query = "DELETE FROM User WHERE user_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 'i', $user_id);
@@ -61,7 +63,7 @@ class User {
         return $result;
     }
 
-    public function getUserById($user_id) {
+    public function getDataById($user_id) {
         $query = "SELECT * FROM User WHERE user_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 'i', $user_id);

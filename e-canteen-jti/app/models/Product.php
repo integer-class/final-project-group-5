@@ -3,8 +3,10 @@
 namespace models;
 require_once '../app/config/Connection.php';
 use config\Connection;
+require_once 'MasterData.php';
+use models\MasterData;
 
-class Product {
+class Product extends MasterData {
     private $product_id;
     private $product_name;
     private $supplier_name;
@@ -20,30 +22,30 @@ class Product {
         $this->connect = $connection->connect;
     }
 
-    public function getAllProducts() {
+    public function getAll() {
         $query = "SELECT * FROM Product";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $row;
     }
 
-    public function createProduct($product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price) {
+    public function create($data) {
         $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'sssssss', $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price);
+        mysqli_stmt_bind_param($statement, 'sssssss', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['sell_price']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
-    public function updateProduct($product_id, $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price) {
+    public function update($data) {
         $query = "UPDATE Product SET product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ? WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'sssssssi', $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price, $product_id);
+        mysqli_stmt_bind_param($statement, 'sssssssi', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['buy_price'], $data['product_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
-    public function deleteProduct($product_id) {
+    public function delete($product_id) {
         $query = "DELETE FROM Product WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 'i', $product_id);
@@ -51,7 +53,7 @@ class Product {
         return $result;
     }
 
-    public function getProductById($product_id) {
+    public function getDataById($product_id) {
         $query = "SELECT * FROM Product WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 'i', $product_id);
