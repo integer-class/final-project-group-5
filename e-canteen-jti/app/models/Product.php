@@ -5,6 +5,14 @@ require_once '../app/config/Connection.php';
 use config\Connection;
 
 class Product {
+    private $product_id;
+    private $product_name;
+    private $supplier_name;
+    private $description;
+    private $category;
+    private $stock;
+    private $buy_price;
+    private $sell_price;
     private $connect;
 
     public function __construct() {
@@ -20,26 +28,35 @@ class Product {
     }
 
     public function createProduct($product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price) {
-        $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price) VALUES ('$product_name', '$supplier_name', '$description', '$category', '$stock', '$buy_price', '$sell_price')";
-        $result = mysqli_query($this->connect, $query);
+        $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'sssssss', $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price);
+        $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
     public function updateProduct($product_id, $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price) {
-        $query = "UPDATE Product SET product_name = '$product_name', supplier_name = '$supplier_name', description = '$description', category = '$category', stock = '$stock', buy_price = '$buy_price', sell_price = '$sell_price' WHERE product_id = '$product_id'";
-        $result = mysqli_query($this->connect, $query);
+        $query = "UPDATE Product SET product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ? WHERE product_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'sssssssi', $product_name, $supplier_name, $description, $category, $stock, $buy_price, $sell_price, $product_id);
+        $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
     public function deleteProduct($product_id) {
-        $query = "DELETE FROM Product WHERE product_id = '$product_id'";
-        $result = mysqli_query($this->connect, $query);
+        $query = "DELETE FROM Product WHERE product_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'i', $product_id);
+        $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
     public function getProductById($product_id) {
-        $query = "SELECT * FROM Product WHERE product_id = '$product_id'";
-        $result = mysqli_query($this->connect, $query);
+        $query = "SELECT * FROM Product WHERE product_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'i', $product_id);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
         $row = mysqli_fetch_assoc($result);
         return $row;
     }
