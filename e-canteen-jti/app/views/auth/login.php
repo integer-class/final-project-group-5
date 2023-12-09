@@ -21,11 +21,19 @@
                 <td>Password</td>
                 <td><input type="password" name="password" size="20"></td>
             </tr>
+
             <tr>
                 <td>&nbsp;</td>
                 <td><input type="submit" name="Login" value="Proses"></td>
             </tr>
         </table>
+        <?php
+
+        if (isset($_GET['error']) && $_GET['error'] === 'failed') {
+            echo "<p style='color: red;'>Gagal login. Silakan coba lagi.</p>";
+        }
+
+        ?>
     </form>
     </main>
 

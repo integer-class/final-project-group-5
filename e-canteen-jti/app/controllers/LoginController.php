@@ -21,7 +21,7 @@ class LoginController {
         } else if ($role  === 'cashier') {
             header('Location: /cashier/home');
         } else {
-            header('Location: /login');
+            header('Location: /login?error=failed');
         }
     }
 }
