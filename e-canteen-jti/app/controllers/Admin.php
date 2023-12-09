@@ -28,7 +28,7 @@ class Admin {
     }
 
     public function renderCreateProduct() {
-        require_once '../app/views/admin/createProduct.php';
+        require_once '../app/views/admin/productCreate.php';
     }
 
     public function renderEditProduct() {
@@ -43,16 +43,16 @@ class Admin {
         $productData = $product->getProductById($product_id);
     
         if ($productData) {
-            require_once '../app/views/admin/editProduct.php';
+            require_once '../app/views/admin/productEdit.php';
         } else {
             echo "User not found.";
             exit();
         }
-        require_once '../app/views/admin/editProduct.php';
+        require_once '../app/views/admin/productEdit.php';
     }
 
     public function renderCreateUser() {
-        require_once '../app/views/admin/createUser.php';
+        require_once '../app/views/admin/userCreate.php';
     }
 
     public function renderEditUser() {
@@ -67,13 +67,13 @@ class Admin {
         $userData = $user->getUserById($user_id);
 
         if ($userData) {
-            require_once '../app/views/admin/editUser.php';
+            require_once '../app/views/admin/userEdit.php';
         } else {
             echo "User not found.";
             exit();
         
     }
-        require_once '../app/views/admin/editUser.php';
+        require_once '../app/views/admin/userEdit.php';
     }
 
 

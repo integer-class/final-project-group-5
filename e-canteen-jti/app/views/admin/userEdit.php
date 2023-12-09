@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit User</title>
-</head>
-<body>
+<?php
+
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
 
     <h2>Edit User</h2>
     <form action="/admin/editUser" method="post">
 
-        <!-- Tambahkan hidden field untuk user_id -->
         <input type="hidden" name="user_id" value="<?php echo $userData['user_id']; ?>">
 
 
@@ -37,5 +35,8 @@
         <input type="submit" name="submit" value="Edit">
     </form>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>

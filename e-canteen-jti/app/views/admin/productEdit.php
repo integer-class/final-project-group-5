@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Product</title>
-</head>
-<body>
+<?php
 
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
     <h2>Edit Product</h2>
     <form action="/admin/editProduct" method="post">
 
@@ -34,5 +32,8 @@
         <input type="submit" name="submit" value="Submit">
     </form>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>

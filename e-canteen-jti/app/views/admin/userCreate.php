@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add User</title>
-</head>
-<body>
+<?php
+
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
 
     <h2>Add User</h2>
     <form action="/admin/createUser" method="post">
@@ -32,5 +31,8 @@
         <input type="submit" name="submit" value="Submit">
     </form>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>

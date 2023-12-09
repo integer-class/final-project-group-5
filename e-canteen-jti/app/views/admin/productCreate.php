@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>AddProduct</title>
-</head>
-<body>
+<?php
+
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
     
     <h2>Add Product</h2>
     <form action="/admin/createProduct" method="post">
@@ -32,5 +31,8 @@
         <input type="submit" name="submit" value="Submit">
     </form>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>

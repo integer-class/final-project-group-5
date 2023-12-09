@@ -1,42 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Data</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .action-btns {
-            display: flex;
-            justify-content: space-between;
-        }
-        .action-btns button {
-            margin-inline: 5px;
-            width: 75%;
-        }
-        .action-btns form {
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <ul>
-        <li><a href="/admin/home">Home</a></li>
-        <li><a href="/admin/user">User</a></li>
-        <li><a href="/admin/product">Product</a></li>
-        <li><a href="#">Report</a></li>
-    </ul>
+<?php
+
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
+<style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px auto;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+.action-btns {
+    display: flex;
+    justify-content: space-between;
+}
+.action-btns button {
+    margin-inline: 5px;
+    width: 75%;
+}
+.action-btns form {
+    width: 100%;
+}
+</style>
 
     <h2>User Data</h2>
     <button onclick="window.location.href='/admin/createUser'">Add User</button>
@@ -75,5 +68,8 @@
         </tbody>
     </table>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>

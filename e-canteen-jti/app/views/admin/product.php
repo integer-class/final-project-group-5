@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Product Data</title>
-    <style>
+<?php
+
+include "templates/header.php";
+include "templates/navbar.php";
+
+?>
+
+<style>
         table {
             border-collapse: collapse;
             width: 100%;
@@ -28,15 +30,7 @@
         .action-btns form {
             width: 100%;
         }
-    </style>
-</head>
-<body>
-    <ul>
-        <li><a href="/admin/home">Home</a></li>
-        <li><a href="/admin/user">User</a></li>
-        <li><a href="/admin/product">Product</a></li>
-        <li><a href="#">Report</a></li>
-    </ul>
+</style>
 
     <h2>Product Data</h2>
     <button onclick="window.location.href='/admin/createProduct'">Add Product</button>
@@ -80,5 +74,8 @@
         </tbody>
     </table>
 
-</body>
-</html>
+<?php
+
+include "templates/footer.php";
+
+?>
