@@ -4,7 +4,7 @@ namespace models;
 require_once '../app/config/Connection.php';
 use config\Connection;
 
-class ProductModel {
+class Product {
     private $connect;
 
     public function __construct() {

@@ -12,6 +12,7 @@
         <li><a href="/admin/user">User</a></li>
         <li><a href="/admin/product">Product</a></li>
         <li><a href="#">Report</a></li>
+        <li><a href="/logout">logout</a></li>
     </ul>
 </body>
 </html>

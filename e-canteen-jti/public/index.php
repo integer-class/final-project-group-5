@@ -1,40 +1,41 @@
 <?php
 
 require_once '../app/config/Router.php';
-require_once '../app/controllers/LoginController.php';
-require_once '../app/controllers/AdminController.php';
-require_once '../app/controllers/CashierController.php';
+require_once '../app/controllers/Auth.php';
+require_once '../app/controllers/Admin.php';
+require_once '../app/controllers/Cashier.php';
 use config\Router;
-use controllers\LoginController;
-use controllers\AdminController;
-use controllers\CashierController;
+use controllers\Auth;
+use controllers\Admin;
+use controllers\Cashier;
 
 $route = new Router();
 //auth
-$route->add('GET', '/login', LoginController::class, 'login');
-$route->add('POST', '/login', LoginController::class, 'loginProcess');
+$route->add('GET', '/login', Auth::class, 'login');
+$route->add('POST', '/login', Auth::class, 'loginProcess');
+$route->add('GET', '/logout', Auth::class,'logout');
 
 //render admin
-$route->add('GET', '/admin/home', AdminController::class, 'renderHome');
-$route->add('GET', '/admin/user', AdminController::class, 'renderUser');
-$route->add('GET', '/admin/product', AdminController::class, 'renderProduct');
-$route->add('GET', '/admin/createProduct', AdminController::class, 'renderCreateProduct');
-$route->add('GET', '/admin/editProduct', AdminController::class, 'renderEditProduct');
-$route->add('GET', '/admin/createUser', AdminController::class, 'renderCreateUser');
-$route->add('GET', '/admin/editUser', AdminController::class, 'renderEditUser');
+$route->add('GET', '/admin/home', Admin::class, 'renderHome');
+$route->add('GET', '/admin/user', Admin::class, 'renderUser');
+$route->add('GET', '/admin/product', Admin::class, 'renderProduct');
+$route->add('GET', '/admin/createProduct', Admin::class, 'renderCreateProduct');
+$route->add('GET', '/admin/editProduct', Admin::class, 'renderEditProduct');
+$route->add('GET', '/admin/createUser', Admin::class, 'renderCreateUser');
+$route->add('GET', '/admin/editUser', Admin::class, 'renderEditUser');
 
 // crud user
-$route->add('POST', '/admin/createUser', AdminController::class, 'createUser');
-$route->add('POST', '/admin/editUser', AdminController::class, 'editUser');
-$route->add('POST', '/admin/deleteUser', AdminController::class, 'deleteUser');
+$route->add('POST', '/admin/createUser', Admin::class, 'createUser');
+$route->add('POST', '/admin/editUser', Admin::class, 'editUser');
+$route->add('POST', '/admin/deleteUser', Admin::class, 'deleteUser');
 
 // crud product
-$route->add('POST', '/admin/createProduct', AdminController::class, 'createProduct');
-$route->add('POST', '/admin/editProduct', AdminController::class, 'editProduct');
-$route->add('POST', '/admin/deleteProduct', AdminController::class, 'deleteProduct');
+$route->add('POST', '/admin/createProduct', Admin::class, 'createProduct');
+$route->add('POST', '/admin/editProduct', Admin::class, 'editProduct');
+$route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
 
 //cashier
-$route->add('GET', '/cashier/home', CashierController::class, 'cashierHome');
+$route->add('GET', '/cashier/home', Cashier::class, 'cashierHome');
 
 //run route
 $route->run();

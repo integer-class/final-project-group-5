@@ -7,5 +7,8 @@
 </head>
 <body>
     <h1>Cashier Homepage</h1>
+    <ul>
+        <li><a href="/logout">logout</a></li>
+    </ul>
 </body>
 </html>

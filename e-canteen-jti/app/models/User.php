@@ -4,7 +4,7 @@ namespace models;
 require_once '../app/config/Connection.php';
 use config\Connection;
 
-class UserModel {
+class User {
     private $connect;
 
     public function __construct() {

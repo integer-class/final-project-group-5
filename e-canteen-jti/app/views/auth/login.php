@@ -30,7 +30,7 @@
         <?php
 
         if (isset($_GET['error']) && $_GET['error'] === 'failed') {
-            echo "<p style='color: red;'>Gagal login. Silakan coba lagi.</p>";
+            echo "<p style='color: red;'>Username or Password is wrong</p>";
         }
 
         ?>
