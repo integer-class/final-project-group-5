@@ -37,7 +37,8 @@ $route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
 
 //cashier
 $route->add('GET', '/cashier/home', Cashier::class, 'renderHome');
-$route->add('GET', '/cashier/cart', Cashier::class, 'renderCart');
+$route->add('GET', '/cashier/sales', Cashier::class, 'renderSales');
+$route->add('POST', '/cashier/processSale', Cashier::class, 'processSale');
 
 //run route
 $route->run();

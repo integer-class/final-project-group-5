@@ -21,20 +21,19 @@ class SalesTransaction extends MasterData {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM SalesTransaction";
+        $query = "SELECT * FROM Sales";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $row;
     }
 
     public function create($data) {
-        $query = "INSERT INTO Sales (sales_transaction_id, sales_transaction_date, total, paid, change, user_id)
-        SELECT ?, CONVERT_TZ(NOW(), '+00:00', '+07:00'), 
-               (SELECT SUM(subtotal) FROM SalesTransactionDetail WHERE sales_transaction_id = ?) AS total, 
-               ?, ?, ?";
+        $query = "INSERT INTO Sales (sales_transaction_date, total, paid, `change`)
+        SELECT CONVERT_TZ(NOW(), '+00:00', '+07:00'), 
+               (SELECT SUM(subtotal) FROM SalesDetail WHERE sales_transaction_id = LAST_INSERT_ID()) AS total, 
+               ?, ?";
         $statement = mysqli_prepare($this->connect, $query);    
-        mysqli_stmt_bind_param($statement, 'sdddd', $data['sales_transaction_id'], $data['sales_transaction_id'], $data['paid'], $data['change'], $data['user_id']);
-    
+        mysqli_stmt_bind_param($statement, 'dd', $data['paid'], $data['change']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }

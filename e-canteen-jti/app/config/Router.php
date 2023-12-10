@@ -24,7 +24,11 @@ class Router {
                 
                 $controller = new $route['controller'];
                 $function = $route['function'];
-                $controller->$function();
+                if ($method == 'POST') {
+                    $controller->$function($_POST);
+                } else {
+                    $controller->$function();
+                }
                 return;
             }
         }

@@ -11,6 +11,7 @@ class SalesTransactionDetail extends MasterData {
     private $sales_transaction_id;
     private $product_id;
     private $quantity;
+    private $unit_price;
     private $subtotal;
     private $connect;
 
@@ -27,7 +28,7 @@ class SalesTransactionDetail extends MasterData {
     }
 
     public function create($data) {
-        $query = "INSERT INTO SalesTransactionDetail (sales_transaction_id, product_id, quantity, unit_price, subtotal)
+        $query = "INSERT INTO SalesDetail (sales_transaction_id, product_id, quantity, unit_price, subtotal)
                     SELECT 
                         ? AS sales_transaction_id,
                         ? AS product_id,
