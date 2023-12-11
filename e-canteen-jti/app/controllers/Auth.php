@@ -31,11 +31,13 @@ class Auth {
         
         if ($role === 'admin') {
             session_start();
+            $_SESSION['user_id'] = $userData['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role;
             header('Location: /admin/home');
         } else if ($role  === 'cashier') {
             session_start();
+            $_SESSION['user_id'] = $userData['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role;
             header('Location: /cashier/home');

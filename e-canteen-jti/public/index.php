@@ -38,6 +38,8 @@ $route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
 //cashier
 $route->add('GET', '/cashier/home', Cashier::class, 'renderHome');
 $route->add('GET', '/cashier/sales', Cashier::class, 'renderSales');
+$route->add('POST', '/cashier/addItem', Cashier::class, 'addItem');
+$route->add('POST', '/cashier/completeTransaction', Cashier::class, 'completeTransaction');
 $route->add('POST', '/cashier/processSale', Cashier::class, 'processSale');
 
 //run route

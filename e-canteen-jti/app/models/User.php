@@ -72,6 +72,10 @@ class User extends MasterData {
         $row = mysqli_fetch_assoc($result);
         return $row;
     }
+
+    public function getUserId() {
+        return $this->user_id;
+    }
 }
 
 ?>
