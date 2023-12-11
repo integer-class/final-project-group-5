@@ -39,10 +39,10 @@ class Cashier {
     
                 $salesData = [
                     'sales_transaction_date' => date('Y-m-d H:i:s'), 
-                    'total' => $total,
+                    'total' => $_POST['total'],
                     'paid' => $_POST['paid'],
-                    'change' => $_POST['paid'] - $total,
-                    'user_id' => $_POST['user_id'],
+                    'change' => $_POST['change'],
+                    'user_id' => $_SESSION['user_id'],
                 ];
     
                 $salesTransactionId = $salesTransaction->create($salesData);
@@ -57,6 +57,24 @@ class Cashier {
                     ];
     
                     $salesTransactionDetail->create($detailData);
+
+                    $quantitySold = $_POST['quantity'];
+                    $currentStock = $productData['stock'];
+                    $updatedStock = $currentStock - $quantitySold;
+    
+                    $updateStockData = [
+                        'product_id' => $_POST['product_id'],
+                        'product_name' => $productData['product_name'],
+                        'supplier_name' => $productData['supplier_name'],
+                        'description' => $productData['description'],
+                        'category' => $productData['category'],
+                        'buy_price' => $productData['buy_price'],
+                        'sell_price' => $productData['sell_price'],
+                        'image' => $productData['image'],
+                        'stock' => $updatedStock,
+                    ];
+    
+                    $product->update($updateStockData);
     
                     header('Location: /cashier/sales');
                     exit();

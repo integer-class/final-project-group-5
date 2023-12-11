@@ -28,12 +28,11 @@ class SalesTransaction extends MasterData {
     }
 
     public function create($data) {
-        $query = "INSERT INTO Sales (sales_transaction_date, total, paid, `change`)
+        $query = "INSERT INTO Sales (sales_transaction_date, total, paid, `change`, user_id)
         SELECT CONVERT_TZ(NOW(), '+00:00', '+07:00'), 
-               (SELECT SUM(subtotal) FROM SalesDetail WHERE sales_transaction_id = LAST_INSERT_ID()) AS total, 
-               ?, ?";
+               ?, ?, ?, ?";
         $statement = mysqli_prepare($this->connect, $query);    
-        mysqli_stmt_bind_param($statement, 'dd', $data['paid'], $data['change']);
+        mysqli_stmt_bind_param($statement, 'dddi', $data['total'], $data['paid'], $data['change'], $data['user_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }

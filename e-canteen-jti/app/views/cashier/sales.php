@@ -20,7 +20,6 @@ include 'templates/navbar.php';
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            text-align: center;
             margin-bottom: 30px;
         }
         form {
