@@ -162,7 +162,9 @@ class Admin {
     public function createProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
+            $product_code = "PRODUCT-" . strval(rand(1000000000, 9999999999));
             
+            $data['product_code'] = $product_code ?? '';
             $data['product_name'] = $_POST['product_name'] ?? '';
             $data['supplier_name'] = $_POST['supplier_name'] ?? '';
             $data['description'] = $_POST['description'] ?? '';
@@ -211,6 +213,7 @@ class Admin {
             $product = new Product();
             
             $data['product_id'] = $_POST['product_id'] ?? '';
+            $data['product_code'] = $_POST['product_code'] ?? '';
             $data['product_name'] = $_POST['product_name'] ?? '';
             $data['supplier_name'] = $_POST['supplier_name'] ?? '';
             $data['description'] = $_POST['description'] ?? '';

@@ -97,6 +97,7 @@ include 'templates/navbar.php';
                 <div class="productInfo">
                     <div>
                         <h3><?php echo $product['product_name']; ?></h3>
+                        <h3><?php echo $product['product_code']; ?></h3>
                         <p>Price: <?php echo $product['sell_price']; ?></p>
                         <p>Stock: <?php echo $product['stock']; ?></p>
                     </div>

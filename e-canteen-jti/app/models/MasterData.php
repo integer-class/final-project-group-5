@@ -23,6 +23,7 @@ class MasterData {
     public function delete($id) {
         return;
     }
+    
 }
 
 ?>

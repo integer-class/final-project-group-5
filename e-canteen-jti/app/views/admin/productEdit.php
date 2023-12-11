@@ -10,6 +10,8 @@ include "templates/navbar.php";
         <input type="hidden" name="product_id" value="<?php echo $productData['product_id']; ?>">
         <label for="product_name">Product Name:</label>
         <input type="text" name="product_name" id="product_name" placeholder="Product Name" required value="<?php echo $productData['product_name']; ?>"><br><br>
+        <label for="product_name">Product Code:</label>
+        <input type="text" name="product_code" id="product_code" placeholder="Product Code" required value="<?php echo $productData['product_code']; ?>"><br><br>
 
         <label for="image">Image:</label>
         <input type="file" name="image" id="image" required><br><br>

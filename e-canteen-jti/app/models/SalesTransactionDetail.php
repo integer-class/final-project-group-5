@@ -28,8 +28,9 @@ class SalesTransactionDetail extends MasterData {
     }
 
     public function create($data) {
-        $query = "INSERT INTO SalesDetail (sales_transaction_id, product_id, quantity, unit_price, subtotal)
+        $query = "INSERT INTO SalesDetail (sales_transaction_code, sales_transaction_id,  product_id, quantity, unit_price, subtotal)
                     SELECT 
+                        ? AS sales_transaction_code,
                         ? AS sales_transaction_id,
                         ? AS product_id,
                         ? AS quantity,
@@ -38,7 +39,7 @@ class SalesTransactionDetail extends MasterData {
                     FROM Product AS p
                     WHERE p.product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'iiidi', $data['sales_transaction_id'], $data['product_id'], $data['quantity'], $data['quantity'], $data['product_id']);
+        mysqli_stmt_bind_param($statement, 'siiidi', $data['sales_transaction_code'], $data['sales_transaction_id'], $data['product_id'], $data['quantity'], $data['quantity'], $data['product_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }

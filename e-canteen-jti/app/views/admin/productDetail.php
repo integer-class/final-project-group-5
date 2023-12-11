@@ -39,6 +39,10 @@ include "templates/navbar.php";
             <span><?php echo $productData['product_id']; ?></span>
         </div>
         <div class="product-info">
+            <label>Product Code:</label>
+            <span><?php echo $productData['product_code']; ?></span>
+        </div>
+        <div class="product-info">
             <label>Product Name:</label>
             <span><?php echo $productData['product_name']; ?></span>
         </div>

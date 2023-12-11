@@ -38,9 +38,9 @@ include "templates/navbar.php";
         <thead>
             <tr>
                 <th>Product ID</th>
+                <th>Product Code</th>
                 <th>Product Name</th>
                 <th>Supplier Name</th>
-                <th>Description</th>
                 <th>Category</th>
                 <th>Stock</th>
                 <th>Buy Price</th>
@@ -54,9 +54,9 @@ include "templates/navbar.php";
                 foreach ($product_data as $product) {
                     echo "<tr>";
                     echo "<td>".$product['product_id']."</td>";
+                    echo "<td>".$product['product_code']."</td>";
                     echo "<td>".$product['product_name']."</td>";
                     echo "<td>".$product['supplier_name']."</td>";
-                    echo "<td>".$product['description']."</td>";
                     echo "<td>".$product['category']."</td>";
                     echo "<td>".$product['stock']."</td>";
                     echo "<td>Rp".$product['buy_price']."</td>";

@@ -35,10 +35,11 @@ class Cashier {
                 $productData = $product->getDataById($_POST['product_id']); 
                 $productPrice = isset($productData['sell_price']) ? $productData['sell_price'] : 0; 
     
-                $total = $productPrice * $_POST['quantity'];
+                $sales_transaction_code = "TRANSACTION-" . strval(rand(100000, 999999));
     
                 $salesData = [
                     'sales_transaction_date' => date('Y-m-d H:i:s'), 
+                    'sales_transaction_code' => $sales_transaction_code,
                     'total' => $_POST['total'],
                     'paid' => $_POST['paid'],
                     'change' => $_POST['change'],
@@ -50,6 +51,7 @@ class Cashier {
                 if ($salesTransactionId) {
                     $detailData = [
                         'sales_transaction_id' => $salesTransactionId,
+                        'sales_transaction_code' => $sales_transaction_code,
                         'product_id' => isset($productData['product_id']) ? $productData['product_id'] : null,
                         'sell_price' => $productPrice,
                         'quantity' => $_POST['quantity'],

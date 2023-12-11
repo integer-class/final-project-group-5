@@ -8,6 +8,7 @@ use models\MasterData;
 
 class Product extends MasterData {
     private $product_id;
+    private $product_code;
     private $product_name;
     private $supplier_name;
     private $description;
@@ -31,17 +32,17 @@ class Product extends MasterData {
     }
 
     public function create($data) {
-        $query = "INSERT INTO Product (product_name, supplier_name, description, category, stock, buy_price, sell_price, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Product (product_code, product_name, supplier_name, description, category, stock, buy_price, sell_price, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'ssssssss', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['sell_price'], $data['image']);
+        mysqli_stmt_bind_param($statement, 'sssssssss', $data['product_code'], $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['sell_price'], $data['image']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
 
     public function update($data) {
-        $query = "UPDATE Product SET product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ?, image = ? WHERE product_id = ?";
+        $query = "UPDATE Product SET product_code = ?, product_name = ?, supplier_name = ?, description = ?, category = ?, stock = ?, buy_price = ?, sell_price = ?, image = ? WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'ssssssssi', $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['buy_price'], $data['image'], $data['product_id']);
+        mysqli_stmt_bind_param($statement, 'sssssssssi', $data['product_code'], $data['product_name'], $data['supplier_name'], $data['description'], $data['category'], $data['stock'], $data['buy_price'], $data['buy_price'], $data['image'], $data['product_id']);
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
