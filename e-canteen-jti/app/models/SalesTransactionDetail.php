@@ -43,6 +43,16 @@ class SalesTransactionDetail extends MasterData {
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
+
+    public function getDataByTransactionCode($transaction_code) {
+        $query = "SELECT * FROM SalesDetail WHERE sales_transaction_code = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 's', $transaction_code);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
     
 
 }

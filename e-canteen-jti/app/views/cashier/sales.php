@@ -93,7 +93,8 @@ include 'templates/navbar.php';
     <div class="container">
     <div id="productsList">
         <?php foreach ($product_data as $product) : ?>
-            <div class="productItem">
+            <?php if ($product['stock'] > 0) : ?>
+                <div class="productItem">
                 <div class="productInfo">
                     <div>
                         <h3><?php echo $product['product_name']; ?></h3>
@@ -103,8 +104,10 @@ include 'templates/navbar.php';
                     </div>
                     <img class="productImage" src="/uploads/<?php echo basename($product['image']); ?>" alt="<?php echo $product['product_name']; ?>">
                 </div>
-                <button class="quantityButton" data-product-id="<?php echo $product['product_id']; ?>">Select Quantity</button>
+                <button class="quantityButton" data-product-id="<?php echo $product['product_id']; ?>" data-sell-price="<?php echo $product['sell_price']; ?>">Select Quantity</button>
+
             </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 
@@ -131,48 +134,48 @@ include 'templates/navbar.php';
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('.quantityButton').click(function() {
+$(document).ready(function() {
+    $('.quantityButton').click(function() {
+        var productId = $(this).data('product-id');
+        var sellPrice = $(this).data('sell-price');
+        
+        $('#product_id').val(productId);
+        var quantityInput = '<label for="quantity_product_' + productId + '">Quantity for Product ' + productId + ':</label><br><br>';
+        quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity" required data-product-id="' + productId + '" class="quantityInput" data-sell-price="' + sellPrice + '"><br>';
+
+        $('#quantityInputs').html(quantityInput);
+
+        $('.quantityInput').on('input', function() {
             var productId = $(this).data('product-id');
-            $('#product_id').val(productId);
-            var quantityInput = '<label for="quantity_product_' + productId + '">Quantity for Product ' + productId + ':</label><br><br>';
-            quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity" required data-product-id="' + productId + '" class="quantityInput"><br>';
+            var quantity = $(this).val();
+            var sellPrice = $(this).data('sell-price');
 
-            $('#quantityInputs').html(quantityInput);
+            var totalPrice = sellPrice * quantity;
+            $('#total').val(totalPrice.toFixed(2));
 
-            $('.quantityInput').on('input', function() {
-                var productId = $(this).data('product-id');
-                var quantity = $(this).val();
-                var sellPrice = <?php echo json_encode($product['sell_price']); ?>; 
-
-                var totalPrice = sellPrice * quantity;
-                $('#total_price_' + productId).val(totalPrice);
-
-                var totalAmount = 0;
-                $('.quantityInput').each(function() {
-                    var qty = $(this).val();
-                    var prodSellPrice = <?php echo json_encode($product['sell_price']); ?>;
-                    totalAmount += parseFloat(qty) * parseFloat(prodSellPrice);
-                });
-                $('#total').val(totalAmount);
-
-                var paidAmount = parseFloat($('#paid').val());
-                var changeAmount = paidAmount - totalAmount;
-                $('#change').val(changeAmount.toFixed(2));
+            var totalAmount = 0;
+            $('.quantityInput').each(function() {
+                var qty = $(this).val();
+                var prodSellPrice = $(this).data('sell-price');
+                totalAmount += parseFloat(qty) * parseFloat(prodSellPrice);
             });
-            
-            $('#paid').on('input', function() {
-                var paidAmount = parseFloat($(this).val());
-                var totalAmount = parseFloat($('#total').val());
-                var changeAmount = paidAmount - totalAmount;
-                $('#change').val(changeAmount.toFixed(2));
-            });
+            $('#total').val(totalAmount.toFixed(2));
+
+            var paidAmount = parseFloat($('#paid').val());
+            var changeAmount = paidAmount - totalAmount;
+            $('#change').val(changeAmount.toFixed(2));
+        });
+        
+        $('#paid').on('input', function() {
+            var paidAmount = parseFloat($(this).val());
+            var totalAmount = parseFloat($('#total').val());
+            var changeAmount = paidAmount - totalAmount;
+            $('#change').val(changeAmount.toFixed(2));
         });
     });
+});
+
 </script>
-
-
-
 
 <?php
 include 'templates/footer.php';

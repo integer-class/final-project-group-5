@@ -36,6 +36,16 @@ class SalesTransaction extends MasterData {
         $result = mysqli_stmt_execute($statement);
         return $result;
     }
+
+    public function getDataById($id) {
+        $query = "SELECT * FROM Sales WHERE sales_transaction_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'i', $id);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
     
    
 }

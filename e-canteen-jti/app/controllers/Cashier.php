@@ -25,6 +25,62 @@ class Cashier {
         require_once '../app/views/cashier/sales.php';
     }
 
+    public function renderReport() {
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getAll();
+        require_once '../app/views/cashier/report.php';
+    }
+
+    public function renderDetailReport() {
+        $salesTransactionId = $_GET['sales_transaction_id'] ?? null;
+    
+        if (!$salesTransactionId) {
+            echo "Sales Transaction ID not provided.";
+            exit();
+        }
+    
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getDataById($salesTransactionId);
+        $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
+    
+        if ($salesTransactionData) {
+            $salesTransactionDetail = new SalesTransactionDetail();
+            $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
+    
+            require_once '../app/views/cashier/reportDetail.php';
+        } else {
+            echo "Sales Transaction not found.";
+            exit();
+        }
+        require_once '../app/views/cashier/reportDetail.php';
+    }
+
+    public function renderProduct() {
+        $product = new Product();
+        $product_data = $product->getAll();
+        require_once '../app/views/cashier/product.php';
+    }
+
+    public function renderDetailProduct() {
+        $product_id = $_GET['product_id'] ?? null;
+    
+        if (!$product_id) {
+            echo "Product ID not provided.";
+            exit();
+        }
+    
+        $product = new Product();
+        $productData = $product->getDataById($product_id);
+    
+        if ($productData) {
+            require_once '../app/views/cashier/productDetail.php';
+        } else {
+            echo "User not found.";
+            exit();
+        }
+        require_once '../app/views/cashier/productDetail.php';
+    }
+
     public function processSale() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['product_id'], $_POST['quantity'], $_POST['paid'], $_POST['user_id'])) {

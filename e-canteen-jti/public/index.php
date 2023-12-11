@@ -24,6 +24,8 @@ $route->add('GET', '/admin/editProduct', Admin::class, 'renderEditProduct');
 $route->add('GET', '/admin/detailProduct', Admin::class, 'renderDetailProduct');
 $route->add('GET', '/admin/createUser', Admin::class, 'renderCreateUser');
 $route->add('GET', '/admin/editUser', Admin::class, 'renderEditUser');
+$route->add('GET', '/admin/report', Admin::class, 'renderReport');
+$route->add('GET', '/admin/detailReport', Admin::class, 'renderdetailReport');
 
 // crud user
 $route->add('POST', '/admin/createUser', Admin::class, 'createUser');
@@ -38,6 +40,10 @@ $route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
 //cashier
 $route->add('GET', '/cashier/home', Cashier::class, 'renderHome');
 $route->add('GET', '/cashier/sales', Cashier::class, 'renderSales');
+$route->add('GET', '/cashier/report', Cashier::class, 'renderReport');
+$route->add('GET', '/cashier/detailReport', Cashier::class, 'renderDetailReport');
+$route->add('GET', '/cashier/product', Cashier::class, 'renderProduct');
+$route->add('GET', '/cashier/detailProduct', Cashier::class, 'renderDetailProduct');
 $route->add('POST', '/cashier/addItem', Cashier::class, 'addItem');
 $route->add('POST', '/cashier/completeTransaction', Cashier::class, 'completeTransaction');
 $route->add('POST', '/cashier/processSale', Cashier::class, 'processSale');

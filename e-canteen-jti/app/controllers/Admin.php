@@ -5,6 +5,10 @@ use models\Product;
 use models\User;
 require_once '../app/models/Product.php';
 require_once '../app/models/User.php';
+use models\SalesTransaction;
+require_once '../app/models/SalesTransaction.php';
+use models\SalesTransactionDetail;
+require_once '../app/models/SalesTransactionDetail.php';
 
 class Admin {
     public function __construct() {
@@ -94,6 +98,36 @@ class Admin {
         
     }
         require_once '../app/views/admin/userEdit.php';
+    }
+
+    public function renderReport() {
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getAll();
+        require_once '../app/views/admin/report.php';
+    }
+
+    public function renderDetailReport() {
+        $salesTransactionId = $_GET['sales_transaction_id'] ?? null;
+    
+        if (!$salesTransactionId) {
+            echo "Sales Transaction ID not provided.";
+            exit();
+        }
+    
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getDataById($salesTransactionId);
+        $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
+    
+        if ($salesTransactionData) {
+            $salesTransactionDetail = new SalesTransactionDetail();
+            $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
+    
+            require_once '../app/views/admin/reportDetail.php';
+        } else {
+            echo "Sales Transaction not found.";
+            exit();
+        }
+        require_once '../app/views/admin/reportDetail.php';
     }
 
 
