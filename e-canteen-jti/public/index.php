@@ -44,9 +44,11 @@ $route->add('GET', '/cashier/report', Cashier::class, 'renderReport');
 $route->add('GET', '/cashier/detailReport', Cashier::class, 'renderDetailReport');
 $route->add('GET', '/cashier/product', Cashier::class, 'renderProduct');
 $route->add('GET', '/cashier/detailProduct', Cashier::class, 'renderDetailProduct');
+$route->add('GET', '/cashier/printReport', Cashier::class, 'renderPrintReport');
 $route->add('POST', '/cashier/addItem', Cashier::class, 'addItem');
 $route->add('POST', '/cashier/completeTransaction', Cashier::class, 'completeTransaction');
 $route->add('POST', '/cashier/processSale', Cashier::class, 'processSale');
+
 
 //run route
 $route->run();

@@ -67,12 +67,12 @@ include "templates/navbar.php";
 
         <div class="product-info">
             <label>Buy Price:</label>
-            <span>Rp<?php echo $productData['buy_price']; ?></span>
+            <span>Rp<?php echo number_format($productData['buy_price'], 2); ?></span>
         </div>
 
         <div class="product-info">
             <label>Sell Price:</label>
-            <span>Rp<?php echo $productData['sell_price']; ?></span>
+            <span>Rp<?php echo number_format($productData['sell_price'], 2); ?></span>
         </div>
 </div>
 

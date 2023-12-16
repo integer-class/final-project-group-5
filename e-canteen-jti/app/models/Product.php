@@ -47,6 +47,14 @@ class Product extends MasterData {
         return $result;
     }
 
+    public function updateStock($data) {
+        $query = "UPDATE Product SET stock = ? WHERE product_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'ii', $data['stock'], $data['product_id']);
+        $result = mysqli_stmt_execute($statement);
+        return $result;
+    }
+
     public function delete($product_id) {
         $query = "DELETE FROM Product WHERE product_id = ?";
         $statement = mysqli_prepare($this->connect, $query);

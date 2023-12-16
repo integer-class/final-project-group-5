@@ -95,18 +95,17 @@ include 'templates/navbar.php';
         <?php foreach ($product_data as $product) : ?>
             <?php if ($product['stock'] > 0) : ?>
                 <div class="productItem">
-                <div class="productInfo">
-                    <div>
-                        <h3><?php echo $product['product_name']; ?></h3>
-                        <h3><?php echo $product['product_code']; ?></h3>
-                        <p>Price: <?php echo $product['sell_price']; ?></p>
-                        <p>Stock: <?php echo $product['stock']; ?></p>
+                    <div class="productInfo">
+                        <div>
+                            <h3><?php echo $product['product_name']; ?></h3>
+                            <h3><?php echo $product['product_code']; ?></h3>
+                            <p>Price: Rp<?php echo number_format($product['sell_price'], 2); ?></p>
+                            <p>Stock: <?php echo $product['stock']; ?></p>
+                        </div>
+                        <img class="productImage" src="/uploads/<?php echo basename($product['image']); ?>" alt="<?php echo $product['product_name']; ?>">
                     </div>
-                    <img class="productImage" src="/uploads/<?php echo basename($product['image']); ?>" alt="<?php echo $product['product_name']; ?>">
+                    <button class="quantityButton" data-product-id="<?php echo $product['product_id']; ?>" data-sell-price="<?php echo $product['sell_price']; ?>">Add Product</button>
                 </div>
-                <button class="quantityButton" data-product-id="<?php echo $product['product_id']; ?>" data-sell-price="<?php echo $product['sell_price']; ?>">Select Quantity</button>
-
-            </div>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
@@ -114,8 +113,7 @@ include 'templates/navbar.php';
     <div id="salesForm">
         <h2>Checkout</h2>
         <form action="/cashier/processSale" method="POST" id="sales_form">
-        <input type="hidden" id="product_id" name="product_id">
-        <input type="hidden" id="user_id" name="user_id" value="<?php echo $userData; ?>">
+            <input type="hidden" id="user_id" name="user_id" value="<?php echo $userData; ?>">
             <div id="quantityInputs">
             </div>
 
@@ -139,42 +137,38 @@ $(document).ready(function() {
         var productId = $(this).data('product-id');
         var sellPrice = $(this).data('sell-price');
         
-        $('#product_id').val(productId);
         var quantityInput = '<label for="quantity_product_' + productId + '">Quantity for Product ' + productId + ':</label><br><br>';
-        quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity" required data-product-id="' + productId + '" class="quantityInput" data-sell-price="' + sellPrice + '"><br>';
+        quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity[' + productId + ']" required data-product-id="' + productId + '" class="quantityInput" data-sell-price="' + sellPrice + '"><br>';
 
-        $('#quantityInputs').html(quantityInput);
+        $('#quantityInputs').append(quantityInput);
+    });
 
-        $('.quantityInput').on('input', function() {
+    $('#sales_form').on('input', '.quantityInput', function() {
+        var totalAmount = 0;
+
+        $('.quantityInput').each(function() {
             var productId = $(this).data('product-id');
             var quantity = $(this).val();
             var sellPrice = $(this).data('sell-price');
 
             var totalPrice = sellPrice * quantity;
-            $('#total').val(totalPrice.toFixed(2));
-
-            var totalAmount = 0;
-            $('.quantityInput').each(function() {
-                var qty = $(this).val();
-                var prodSellPrice = $(this).data('sell-price');
-                totalAmount += parseFloat(qty) * parseFloat(prodSellPrice);
-            });
-            $('#total').val(totalAmount.toFixed(2));
-
-            var paidAmount = parseFloat($('#paid').val());
-            var changeAmount = paidAmount - totalAmount;
-            $('#change').val(changeAmount.toFixed(2));
+            totalAmount += totalPrice;
         });
-        
-        $('#paid').on('input', function() {
-            var paidAmount = parseFloat($(this).val());
-            var totalAmount = parseFloat($('#total').val());
-            var changeAmount = paidAmount - totalAmount;
-            $('#change').val(changeAmount.toFixed(2));
-        });
+
+        $('#total').val(totalAmount.toFixed(2));
+
+        var paidAmount = parseFloat($('#paid').val());
+        var changeAmount = paidAmount - totalAmount;
+        $('#change').val(changeAmount.toFixed(2));
+    });
+    
+    $('#paid').on('input', function() {
+        var paidAmount = parseFloat($(this).val());
+        var totalAmount = parseFloat($('#total').val());
+        var changeAmount = paidAmount - totalAmount;
+        $('#change').val(changeAmount.toFixed(2));
     });
 });
-
 </script>
 
 <?php

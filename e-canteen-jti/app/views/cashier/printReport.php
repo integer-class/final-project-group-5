@@ -1,7 +1,6 @@
 <?php
 
 include "templates/header.php";
-include "templates/navbar.php";
 
 ?>
 
@@ -70,9 +69,7 @@ include "templates/navbar.php";
 </style>
 
 <div class="container">
-    <h1>E-Canteen JTI</h1>
-    <h3>Sales Transaction Report</h3>
-    <a href="/cashier/printReport">Print Sales Transaction Report</a>
+    <h1>Sales Transaction Report</h1>
 
     <table border="1">
         <thead>
@@ -83,7 +80,6 @@ include "templates/navbar.php";
                 <th>Paid</th>
                 <th>Change</th>
                 <th>User ID</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -98,17 +94,12 @@ include "templates/navbar.php";
                     <td>Rp<?php echo number_format($transaction['paid'], 2); ?></td>
                     <td>Rp<?php echo number_format($transaction['change'], 2); ?></td>
                     <td><?php echo $transaction['user_id']; ?></td>
-                    <td><a class="detail-button" href="/cashier/detailReport?sales_transaction_id=<?php echo $transaction['sales_transaction_id']; ?>">Print Detail Report</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 
-
-
-<?php
-
-include "templates/footer.php";
-
-?>
+<script>
+    window.print();
+</script>
