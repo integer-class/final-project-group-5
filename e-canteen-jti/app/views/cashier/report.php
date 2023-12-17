@@ -82,7 +82,7 @@ include "templates/navbar.php";
                 <th>Total</th>
                 <th>Paid</th>
                 <th>Change</th>
-                <th>User ID</th>
+                <th>User</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -97,7 +97,7 @@ include "templates/navbar.php";
                     <td>Rp<?php echo number_format($transaction['total'], 2); ?></td>
                     <td>Rp<?php echo number_format($transaction['paid'], 2); ?></td>
                     <td>Rp<?php echo number_format($transaction['change'], 2); ?></td>
-                    <td><?php echo $transaction['user_id']; ?></td>
+                    <td><?php echo $transaction['username']; ?></td>
                     <td><a class="detail-button" href="/cashier/detailReport?sales_transaction_id=<?php echo $transaction['sales_transaction_id']; ?>">Print Detail Report</a></td>
                 </tr>
             <?php endforeach; ?>

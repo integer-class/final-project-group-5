@@ -26,6 +26,7 @@ $route->add('GET', '/admin/createUser', Admin::class, 'renderCreateUser');
 $route->add('GET', '/admin/editUser', Admin::class, 'renderEditUser');
 $route->add('GET', '/admin/report', Admin::class, 'renderReport');
 $route->add('GET', '/admin/detailReport', Admin::class, 'renderdetailReport');
+$route->add('GET', '/admin/printReport', Admin::class, 'renderPrintReport');
 
 // crud user
 $route->add('POST', '/admin/createUser', Admin::class, 'createUser');

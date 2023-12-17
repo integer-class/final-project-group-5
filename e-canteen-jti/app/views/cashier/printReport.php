@@ -79,7 +79,7 @@ include "templates/header.php";
                 <th>Total</th>
                 <th>Paid</th>
                 <th>Change</th>
-                <th>User ID</th>
+                <th>User</th>
             </tr>
         </thead>
         <tbody>
@@ -93,7 +93,7 @@ include "templates/header.php";
                     <td>Rp<?php echo number_format($transaction['total'], 2); ?></td>
                     <td>Rp<?php echo number_format($transaction['paid'], 2); ?></td>
                     <td>Rp<?php echo number_format($transaction['change'], 2); ?></td>
-                    <td><?php echo $transaction['user_id']; ?></td>
+                    <td><?php echo $transaction['username']; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

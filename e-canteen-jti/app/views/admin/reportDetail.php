@@ -1,7 +1,6 @@
 <?php
 
 include "templates/header.php";
-include "templates/navbar.php";
 
 ?>
 
@@ -62,46 +61,52 @@ include "templates/navbar.php";
 
 
 <div class="container">
+<?php
+    $date = date('Y-m-d', strtotime($salesTransactionData['sales_transaction_date']));    
+    ?>
     <h1>E-Canteen JTI</h1>
 
     <h2>Report Information</h2>
-    <p><strong>Transaction ID:</strong> <?php echo $salesTransactionData['sales_transaction_id']; ?></p>
     <p><strong>Transaction Code:</strong> <?php echo $salesTransactionData['sales_transaction_code']; ?></p>
-    <p><strong>Date:</strong> <?php echo $salesTransactionData['sales_transaction_date']; ?></p>
-    <p><strong>Total:</strong> <?php echo $salesTransactionData['total']; ?></p>
-    <p><strong>Paid:</strong> <?php echo $salesTransactionData['paid']; ?></p>
-    <p><strong>Change:</strong> <?php echo $salesTransactionData['change']; ?></p>
-    <p><strong>User ID:</strong> <?php echo $salesTransactionData['user_id']; ?></p>
+    <p><strong>Date:</strong> <?php echo $date; ?></p>
+    <p><strong>Total:</strong> Rp<?php echo number_format($salesTransactionData['total'], 2); ?></p>
+    <p><strong>Paid:</strong> Rp<?php echo number_format($salesTransactionData['paid'], 2); ?></p>
+    <p><strong>Change:</strong> Rp<?php echo number_format($salesTransactionData['change'], 2); ?></p>
+    <p><strong>User:</strong> <?php echo $salesTransactionData['username']; ?></p>
 
     <h2>Details</h2>
     <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Transaction Code</th>
-                <th>Product ID</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
+    <thead>
+        <tr>
+            <th>Transaction Code</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($salesTransactionDetailData as $detailData) : ?>
                 <tr>
-                    <td><?php echo $salesTransactionDetailData['sales_transaction_detail_id']; ?></td>
-                    <td><?php echo $salesTransactionDetailData['sales_transaction_code']; ?></td>
-                    <td><?php echo $salesTransactionDetailData['product_id']; ?></td>
-                    <td><?php echo $salesTransactionDetailData['quantity']; ?></td>
-                    <td><?php echo $salesTransactionDetailData['unit_price']; ?></td>
-                    <td><?php echo $salesTransactionDetailData['subtotal']; ?></td>
+                    <td><?php echo $detailData['sales_transaction_code']; ?></td>
+                    <td><?php echo $detailData['product_name']; ?></td>
+                    <td><?php echo $detailData['quantity']; ?></td>
+                    <td>Rp<?php echo number_format($detailData['unit_price'], 2); ?></td>
+                    <td>Rp<?php echo number_format($detailData['subtotal'], 2); ?></td>
                 </tr>
-        </tbody>
-    </table>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 </div>
+
+<script>
+    window.print();
+</script>
 
 
 
 <?php
 
-include "templates/footer.php";
+// include "templates/footer.php";
 
 ?>

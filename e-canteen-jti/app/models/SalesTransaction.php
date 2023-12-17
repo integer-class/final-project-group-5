@@ -21,7 +21,9 @@ class SalesTransaction extends MasterData {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM Sales";
+        $query = "SELECT s.*, u.username
+        FROM Sales AS s
+        JOIN User AS u ON u.user_id = s.user_id";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $row;
@@ -38,7 +40,10 @@ class SalesTransaction extends MasterData {
     }
 
     public function getDataById($id) {
-        $query = "SELECT * FROM Sales WHERE sales_transaction_id = ?";
+        $query = "SELECT s.*, u.username
+        FROM Sales AS s
+        JOIN User AS u ON u.user_id = s.user_id
+        WHERE sales_transaction_id = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 'i', $id);
         mysqli_stmt_execute($statement);

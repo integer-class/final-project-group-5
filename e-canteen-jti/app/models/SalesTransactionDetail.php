@@ -21,7 +21,9 @@ class SalesTransactionDetail extends MasterData {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM SalesTransactionDetail";
+        $query = "SELECT std.*, p.product_name
+        FROM SalesTransactionDetail AS std
+        JOIN Product AS p ON p.product_id = std.product_id";
         $result = mysqli_query($this->connect, $query);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $row;
@@ -45,7 +47,10 @@ class SalesTransactionDetail extends MasterData {
     }
 
     public function getDataByTransactionCode($transaction_code) {
-        $query = "SELECT * FROM SalesDetail WHERE sales_transaction_code = ?";
+        $query = "SELECT std.*, p.product_name
+        FROM SalesDetail AS std
+        JOIN Product AS p ON p.product_id = std.product_id
+        WHERE sales_transaction_code = ?";
         $statement = mysqli_prepare($this->connect, $query);
         mysqli_stmt_bind_param($statement, 's', $transaction_code);
         mysqli_stmt_execute($statement);

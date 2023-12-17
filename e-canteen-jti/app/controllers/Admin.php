@@ -106,6 +106,12 @@ class Admin {
         require_once '../app/views/admin/report.php';
     }
 
+    public function renderPrintReport() {
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getAll();
+        require_once '../app/views/admin/printReport.php';
+    }
+
     public function renderDetailReport() {
         $salesTransactionId = $_GET['sales_transaction_id'] ?? null;
     
@@ -116,17 +122,17 @@ class Admin {
     
         $salesTransaction = new SalesTransaction();
         $salesTransactionData = $salesTransaction->getDataById($salesTransactionId);
-        $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
     
-        if ($salesTransactionData) {
-            $salesTransactionDetail = new SalesTransactionDetail();
-            $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
-    
-            require_once '../app/views/admin/reportDetail.php';
-        } else {
+        if (!$salesTransactionData) {
             echo "Sales Transaction not found.";
             exit();
         }
+    
+        $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
+    
+        $salesTransactionDetail = new SalesTransactionDetail();
+        $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
+    
         require_once '../app/views/admin/reportDetail.php';
     }
 
