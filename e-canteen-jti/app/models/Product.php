@@ -73,6 +73,17 @@ class Product extends MasterData {
         return $row;
     }
 
+    public function getDataByProductName($product_name) {
+        $query = "SELECT * FROM Product WHERE product_name = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 's', $product_name);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+        return $data;
+    }
+
 }
 
 ?>

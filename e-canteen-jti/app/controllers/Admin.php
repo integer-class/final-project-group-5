@@ -25,10 +25,30 @@ class Admin {
         require_once '../app/views/admin/user.php';
     }
 
+    public function getUsername() {
+        if (isset($_POST['username'])) {
+            $username = $_POST['username'];
+            $user = new User();
+            $user_data = $user->getDataByUsername($username);
+
+            require_once '../app/views/admin/user.php';
+        }
+    }
+
     public function renderProduct() {
         $product = new Product();
         $product_data = $product->getAll();
         require_once '../app/views/admin/product.php';
+    }
+
+    public function getProductName() {
+        if (isset($_POST['product_name'])) {
+            $product_name = $_POST['product_name'];
+            $product = new Product();
+            $product_data = $product->getDataByProductName($product_name);
+
+            require_once '../app/views/admin/product.php';
+        }
     }
 
     public function renderCreateProduct() {

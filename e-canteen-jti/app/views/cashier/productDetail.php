@@ -1,83 +1,82 @@
-<?php
-
-include "templates/header.php";
-include "templates/navbar.php";
-
-?>
-
-<!-- content -->
-<style>
-        .product-details {
-            width: 50%;
-            margin: 20px auto;
-            border: 1px solid #ddd;
-            padding: 20px;
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cashier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+    .navbar a:hover {
+      font-weight: bold;
+    }
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+        .jumbotron {
+          padding: 50px 0;
         }
-        .product-details img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 15px;
-        }
-        .product-info {
-            margin-bottom: 15px;
-        }
-        .product-info label {
-            font-weight: bold;
-        }
-</style>
-
-<div class="product-details">
-        <h1>Product Detail</h1>
-        <div class="product-info">
-            <label>Image:</label>
-            <img src="/uploads/<?php echo basename($productData['image']); ?>">
-        </div>
         
-        <div class="product-info">
-            <label>Product ID:</label>
-            <span><?php echo $productData['product_id']; ?></span>
-        </div>
-        <div class="product-info">
-            <label>Product Code:</label>
-            <span><?php echo $productData['product_code']; ?></span>
-        </div>
-        <div class="product-info">
-            <label>Product Name:</label>
-            <span><?php echo $productData['product_name']; ?></span>
-        </div>
-        <div class="product-info">
-            <label>Supplier Name:</label>
-            <span><?php echo $productData['supplier_name']; ?></span>
-        </div>
-        <div class="product-info">
-            <label>Description:</label>
-            <span><?php echo $productData['description']; ?></span>
-        </div>
-        
-        <div class="product-info">
-            <label>Category:</label>
-            <span><?php echo $productData['category']; ?></span>
-        </div>
-        
-        <div class="product-info">
-            <label>Stock:</label>
-            <span><?php echo $productData['stock']; ?></span>
-        </div>
+        body {
+          font-family: 'Quicksand', sans-serif;
+        }
+        .card {
+          border-radius: 10px;
+        }
+    </style>
+  </head>
+  <body>
 
-        <div class="product-info">
-            <label>Buy Price:</label>
-            <span>Rp<?php echo number_format($productData['buy_price'], 2); ?></span>
-        </div>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-white">
+    <div class="container">
+      <a class="navbar-brand" href="#">E-Canteen JTI</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/cashier/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cashier/sales">Sales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/cashier/product">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cashier/report">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-        <div class="product-info">
-            <label>Sell Price:</label>
-            <span>Rp<?php echo number_format($productData['sell_price'], 2); ?></span>
-        </div>
-</div>
+  <div class="container">
+  <h2>Detail Product</h2>
+  <div class="card mx-auto" style="width: 18rem;">
+  <img src="/uploads/<?php echo basename($productData['image']); ?>" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title"><?php echo $productData['product_name']; ?></h5>
+    <p class="card-text">Product Id : <?php echo $productData['product_id']; ?></p>
+    <p class="card-text">Product Code : <?php echo $productData['product_code']; ?></p>
+    <p class="card-text">Supplier Name : <?php echo $productData['supplier_name']; ?></p>
+    <p class="card-text">Description : <?php echo $productData['description']; ?></p>
+    <p class="card-text">Category : <?php echo $productData['category']; ?></p>
+    <p class="card-text">Stock : <?php echo $productData['stock']; ?></p>
+    <p class="card-text">Buy Price : Rp<?php echo number_format($productData['buy_price'], 2); ?></p>
+    <p class="card-text">Sell Price : Rp<?php echo number_format($productData['sell_price'], 2); ?></p>
+  </div>
+</div><br>
 
-<?php
+  <footer>
+          <div class="container text-center">
+            <p>&copy; 2023 E-Canteen JTI. All rights reserved.</p>
+          </div>
+        </footer>
+  </div>
 
-include "templates/footer.php";
-
-?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

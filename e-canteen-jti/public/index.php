@@ -32,13 +32,16 @@ $route->add('GET', '/admin/printReport', Admin::class, 'renderPrintReport');
 $route->add('POST', '/admin/createUser', Admin::class, 'createUser');
 $route->add('POST', '/admin/editUser', Admin::class, 'editUser');
 $route->add('POST', '/admin/deleteUser', Admin::class, 'deleteUser');
+$route->add('POST', '/admin/getUsername', Admin::class, 'getUsername');
 
 // crud product
 $route->add('POST', '/admin/createProduct', Admin::class, 'createProduct');
 $route->add('POST', '/admin/editProduct', Admin::class, 'editProduct');
 $route->add('POST', '/admin/deleteProduct', Admin::class, 'deleteProduct');
+$route->add('POST', '/admin/getProductName', Admin::class, 'getProductName');
 
 //cashier
+$route->add('POST', '/cashier/getProductName', Cashier::class, 'getProductName');
 $route->add('GET', '/cashier/home', Cashier::class, 'renderHome');
 $route->add('GET', '/cashier/sales', Cashier::class, 'renderSales');
 $route->add('GET', '/cashier/report', Cashier::class, 'renderReport');

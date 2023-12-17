@@ -73,6 +73,17 @@ class User extends MasterData {
         return $row;
     }
 
+    public function getDataByUsername($username) {
+        $query = "SELECT * FROM User WHERE username = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 's', $username);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+        return $data;
+    }
+
     public function getUserId() {
         return $this->user_id;
     }

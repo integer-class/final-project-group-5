@@ -1,82 +1,124 @@
-<?php
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .navbar a:hover {
+    font-weight: bold;
+}
 
-include "templates/header.php";
-include "templates/navbar.php";
+  .btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: #000000 solid 2px;
+    font-weight: bold;
+}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
-?>
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+    </style>
+  </head>
+  <body>
+    
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-white">
+    <div class="container">
+      <a class="navbar-brand" href="#">E-Canteen JTI</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/admin/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/user">User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin/product">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/report">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .action-btns {
-            display: flex;
-            justify-content: space-between;
-        }
-        .action-btns button {
-            margin-inline: 5px;
-            width: 75%;
-        }
-        .action-btns form {
-            width: 100%;
-        }
-</style>
+  <!-- content -->
+  <div class="container">
+    <h2>Product management</h2>
+            <!-- Search Form -->
+            <form class="d-flex" role="search" action="/admin/getProductName" method="post">
+        <input class="form-control me-2" type="text" placeholder="Search Product Name" aria-label="Search" name="product_name">
+        <button class="btn btn-dark" type="submit">Search</button>
+      </form><br>
+    <a class="btn btn-dark" href="/admin/createProduct">Add Product</a>
 
-    <h2>Product Data</h2>
-    <button onclick="window.location.href='/admin/createProduct'">Add Product</button>
-    <table>
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Product ID</th>
-                <th>Product Code</th>
-                <th>Product Name</th>
-                <th>Supplier Name</th>
-                <th>Category</th>
-                <th>Stock</th>
-                <th>Buy Price</th>
-                <th>Sell Price</th>
-                <th>Action</th>
-
+                <th class="col">Product ID</th>
+                <th class="col">Product Code</th>
+                <th class="col">Product name</th>
+                <th class="col">Supplier Name</th>
+                <th class="col">Category</th>
+                <th class="col">Stock</th>
+                <th class="col">Buy Price</th>
+                <th class="col">Sell Price</th>
+                <th class="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <?php
-                foreach ($product_data as $product) {
-                    echo "<tr>";
-                    echo "<td>".$product['product_id']."</td>";
-                    echo "<td>".$product['product_code']."</td>";
-                    echo "<td>".$product['product_name']."</td>";
-                    echo "<td>".$product['supplier_name']."</td>";
-                    echo "<td>".$product['category']."</td>";
-                    echo "<td>".$product['stock']."</td>";
-                    echo "<td>Rp".$product['buy_price']."</td>";
-                    echo "<td>Rp".$product['sell_price']."</td>";
-                    echo "<td class='action-btns'>";
-                    echo "<button onclick=\"window.location.href='/admin/detailProduct?product_id=".$product['product_id']."'\">Detail</button>";
-                    echo "<button onclick=\"window.location.href='/admin/editProduct?product_id=".$product['product_id']."'\">Edit</button>";
-                    echo "<form method='post' action='/admin/deleteProduct'>";
-                    echo "<input type='hidden' name='product_id' value='".$product['product_id']."'>";
-                    echo "<button type='submit'>Delete</button>";
-                    echo "</form>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
+            <?php foreach ($product_data as $product) { ?>
+            <tr>
+                <td><?php echo $product['product_id']; ?></td>
+                <td><?php echo $product['product_code']; ?></td>
+                <td><?php echo $product['product_name']; ?></td>
+                <td><?php echo $product['supplier_name']; ?></td>
+                <td><?php echo $product['category']; ?></td>
+                <td><?php echo $product['stock']; ?></td>
+                <td>Rp<?php echo number_format($product['buy_price'], 2); ?></td>
+                <td>Rp<?php echo number_format($product['sell_price'], 2); ?></td>
+                <td>
+              <div class="row">
+                <div class="col">
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editProduct?product_id=<?php echo $product['product_id']; ?>">Edit</a>
+                </div>
+                <div class="col">
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/detailProduct?product_id=<?php echo $product['product_id']; ?>">Detail</a>
+                </div>
+                <div class="col">
+                  <form action="/admin/deleteProduct" method="post">
+                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                    <button style="width: 100%;" type='submit' class="btn btn-dark">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </td>
+            </tr>
+            <?php } ?>
         </tbody>
     </table>
 
-<?php
+    <footer>
+          <div class="container text-center">
+            <p>&copy; 2023 E-Canteen JTI. All rights reserved.</p>
+          </div>
+        </footer>
+  </div>
 
-include "templates/footer.php";
 
-?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

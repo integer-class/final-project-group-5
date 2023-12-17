@@ -1,144 +1,142 @@
-<?php
-include 'templates/header.php';
-include 'templates/navbar.php';
-?>
-
-<!-- content -->
-<style>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cashier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+    .navbar a:hover {
+      font-weight: bold;
+    }
+    .btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: #000000 solid 2px;
+    font-weight: bold;
+}
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+        .jumbotron {
+          padding: 50px 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+          font-family: 'Quicksand', sans-serif;
         }
-        .container {
-            width: 95%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 30px;
+        .card {
+            margin-inline: 5px;
+            margin-block: 5px;
         }
         form {
-            display: flex;
-            flex-direction: column;
+            margin-inline: 10px;
         }
-        label {
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="number"],
-        select {
-            padding: 8px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .productItem {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .productInfo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        .productImage {
-            width: 200px;
-            height: auto;
-        }
-        .quantityButton {
-            padding: 5px 10px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .quantityButton:hover {
-            background-color: #45a049;
-        }
-        .container {
-        display: flex;
-        justify-content: space-between;
-        }
-        #productsList {
-            width: 45%;
-        }
-        #salesForm {
-            width: 45%;
+        form input {
+            width: 100%;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
 
-    <h1>Sales Transaction</h1>
-
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-white">
     <div class="container">
-    <div id="productsList">
-        <?php foreach ($product_data as $product) : ?>
+      <a class="navbar-brand" href="#">E-Canteen JTI</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/admin/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/cashier/sales">Sales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cashier/product">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cashier/report">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav><br>
+
+  <div class="container">
+    <h2>Sales Transaction</h2>
+    <div class="row">
+        <div class="productList col-md-8">
+            <div class="row">
+            <?php foreach ($product_data as $product) : ?>
             <?php if ($product['stock'] > 0) : ?>
-                <div class="productItem">
-                    <div class="productInfo">
-                        <div>
-                            <h3><?php echo $product['product_name']; ?></h3>
-                            <h3><?php echo $product['product_code']; ?></h3>
-                            <p>Price: Rp<?php echo number_format($product['sell_price'], 2); ?></p>
-                            <p>Stock: <?php echo $product['stock']; ?></p>
+                <div class="productItem col-md-4">
+                    <div class="productInfo card" style="width: 18rem;">
+                    <img class="productImage" src="/uploads/<?php echo basename($product['image']); ?>" alt="<?php echo $product['product_name']; ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
+                            <p class="card-text"><?php echo $product['product_code']; ?></p>
+                            <p class="card-text">Price: Rp<?php echo number_format($product['sell_price'], 2); ?></p>
+                            <p class="card-text">Stock: <?php echo $product['stock']; ?></p>
+                            <button class="quantityButton btn btn-dark" data-product-name="<?php echo $product['product_name']; ?>" data-product-id="<?php echo $product['product_id']; ?>" data-sell-price="<?php echo $product['sell_price']; ?>">Add Product</button>
                         </div>
-                        <img class="productImage" src="/uploads/<?php echo basename($product['image']); ?>" alt="<?php echo $product['product_name']; ?>">
                     </div>
-                    <button class="quantityButton" data-product-id="<?php echo $product['product_id']; ?>" data-sell-price="<?php echo $product['sell_price']; ?>">Add Product</button>
                 </div>
             <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
-
-    <div id="salesForm">
-        <h2>Checkout</h2>
+        <?php endforeach; ?>                
+            </div>
+        </div>
+        <div class="checkout col-md-4">
+        <div id="salesForm">
+        <h2 class="text-center">Checkout</h2>
         <form action="/cashier/processSale" method="POST" id="sales_form">
             <input type="hidden" id="user_id" name="user_id" value="<?php echo $userData; ?>">
             <div id="quantityInputs">
             </div>
 
-            <label for="total">Total Price:</label>
-            <input type="number" id="total" name="total" readonly><br><br>
+            <div class="mb-3">
+                <label class="form-label" for="total">Total Price:</label>
+                <input class="form-control" type="number" id="total" name="total" readonly>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="paid">Paid Amount:</label>
+                <input class="form-control" type="number" id="paid" name="paid" required>
+            </div>
 
-            <label for="paid">Paid Amount:</label>
-            <input type="number" id="paid" name="paid" required><br><br>
-
-            <label for="change">Change Amount:</label>
-            <input type="number" id="change" name="change" readonly><br><br>
-
-            <input type="submit" value="Process Sale">
+            <div class="mb-3">
+                <label class="form-label" for="change">Change Amount:</label>
+                <input class="form-control" type="number" id="change" name="change" readonly>
+            </div>
+            <input class="btn btn-dark" type="submit" value="Confirm Payment">
         </form>
     </div>
-</div>
+        </div>
+    </div><br>
 
-<script>
+
+
+  <footer>
+          <div class="container text-center">
+            <p>&copy; 2023 E-Canteen JTI. All rights reserved.</p>
+          </div>
+        </footer>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
 $(document).ready(function() {
     $('.quantityButton').click(function() {
         var productId = $(this).data('product-id');
+        var productName = $(this).data('product-name');
         var sellPrice = $(this).data('sell-price');
         
-        var quantityInput = '<label for="quantity_product_' + productId + '">Quantity for Product ' + productId + ':</label><br><br>';
-        quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity[' + productId + ']" required data-product-id="' + productId + '" class="quantityInput" data-sell-price="' + sellPrice + '"><br>';
+        var quantityInput = '<label class="form-label" for="quantity_product_' + productId + '">Quantity for Product ' + productId + ' - ' + productName + ':</label><br>';
+        quantityInput += '<input type="number" id="quantity_product_' + productId + '" name="quantity[' + productId + ']" required data-product-id="' + productId + '" class="quantityInput" data-sell-price="' + sellPrice + '"><br><br>';
 
         $('#quantityInputs').append(quantityInput);
     });
@@ -170,7 +168,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
-<?php
-include 'templates/footer.php';
-?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

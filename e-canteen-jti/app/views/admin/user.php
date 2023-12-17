@@ -1,75 +1,114 @@
-<?php
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .navbar a:hover {
+    font-weight: bold;
+}
 
-include "templates/header.php";
-include "templates/navbar.php";
+  .btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: #000000 solid 2px;
+    font-weight: bold;
+}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
-?>
-<style>
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px auto;
+body {
+  font-family: 'Quicksand', sans-serif;
 }
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-th {
-    background-color: #f2f2f2;
-}
-.action-btns {
-    display: flex;
-    justify-content: space-between;
-}
-.action-btns button {
-    margin-inline: 5px;
-    width: 75%;
-}
-.action-btns form {
-    width: 100%;
-}
-</style>
+    </style>
+  </head>
+  <body>
 
-    <h2>User Data</h2>
-    <button onclick="window.location.href='/admin/createUser'">Add User</button>
-    <table>
+      <!-- navbar -->
+      <nav class="navbar navbar-expand-lg bg-white">
+    <div class="container">
+      <a class="navbar-brand" href="#">E-Canteen JTI</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/admin/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin/user">User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/product">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/report">Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>User Management</h2>
+            <!-- Search Form -->
+            <form class="d-flex" role="search" action="/admin/getUsername" method="post">
+        <input class="form-control me-2" type="text" placeholder="Search Username" aria-label="Search" name="username">
+        <button class="btn btn-dark" type="submit">Search</button>
+      </form><br>
+    <a class="btn btn-dark" href="/admin/createUser">Add User</a>
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>User ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Action</th>
+                <th class="col">User ID</th>
+                <th class="col">Username</th>
+                <th class="col">Email</th>
+                <th class="col">Role</th>
+                <th class="col">Address</th>
+                <th class="col">Phone Number</th>
+                <th class="col">Action</th>
             </tr>
         </thead>
         <tbody>
-        <?php
-                foreach ($user_data as $user) {
-                    echo "<tr>";
-                    echo "<td>".$user['user_id']."</td>";
-                    echo "<td>".$user['username']."</td>";
-                    echo "<td>".$user['email']."</td>";
-                    echo "<td>".$user['role']."</td>";
-                    echo "<td>".$user['address']."</td>";
-                    echo "<td>".$user['phone_number']."</td>";
-                    echo "<td class='action-btns'>";
-                    echo "<button onclick=\"window.location.href='/admin/editUser?user_id=".$user['user_id']."'\">Edit</button>";
-                    echo "<form method='post' action='/admin/deleteUser'>";
-                    echo "<input type='hidden' name='user_id' value='".$user['user_id']."'>";
-                    echo "<button type='submit'>Delete</button>";
-                    echo "</form>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
+            <?php foreach ($user_data as $user) { ?>
+            <tr>
+                <td><?php echo $user['user_id']; ?></td>
+                <td><?php echo $user['username']; ?></td>
+                <td><?php echo $user['email']; ?></td>
+                <td><?php echo $user['role']; ?></td>
+                <td><?php echo $user['address']; ?></td>
+                <td><?php echo $user['phone_number']; ?></td>
+                <td>
+              <div class="row">
+                <div class="col">
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editUser?user_id=<?php echo $user['user_id']; ?>">Edit</a>
+                </div>
+                <div class="col">
+                  <form action="/admin/deleteUser" method="post">
+                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                    <button style="width: 100%;" type='submit' class="btn btn-dark">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </td>
+            </tr>
+            <?php } ?>
         </tbody>
     </table>
 
-<?php
+    <footer>
+          <div class="container text-center">
+            <p>&copy; 2023 E-Canteen JTI. All rights reserved.</p>
+          </div>
+        </footer>
 
-include "templates/footer.php";
+  </div>
 
-?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

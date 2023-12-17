@@ -68,6 +68,16 @@ public function renderDetailReport() {
         require_once '../app/views/cashier/product.php';
     }
 
+    public function getProductName() {
+        if (isset($_POST['product_name'])) {
+            $product_name = $_POST['product_name'];
+            $product = new Product();
+            $product_data = $product->getDataByProductName($product_name);
+
+            require_once '../app/views/cashier/product.php';
+        }
+    }
+
     public function renderDetailProduct() {
         $product_id = $_GET['product_id'] ?? null;
     
