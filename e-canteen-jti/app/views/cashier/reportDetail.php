@@ -33,22 +33,22 @@ body {
         <tr>
             <td><b>Transaction Code</b></td>
             <td><b> : </b></td>
-            <td><?php echo $salesTransactionData['sales_transaction_code']; ?></td>
+            <td><?php echo $salesTransactionData->getSalesTransactionCode(); ?></td>
         </tr>
         <tr>
             <td><b>Total</b></td>
             <td><b> : </b></td>
-            <td>Rp<?php echo number_format($salesTransactionData['total'], 2); ?></td>
+            <td>Rp<?php echo number_format($salesTransactionData->getTotal(), 2); ?></td>
         </tr>
         <tr>
             <td><b>Paid</b></td>
             <td><b> : </b></td>
-            <td>Rp<?php echo number_format($salesTransactionData['paid'], 2); ?></td>
+            <td>Rp<?php echo number_format($salesTransactionData->getPaid(), 2); ?></td>
         </tr>
         <tr>
             <td><b>Change</b></td>
             <td><b> : </b></td>
-            <td>Rp<?php echo number_format($salesTransactionData['change'], 2); ?></td>
+            <td>Rp<?php echo number_format($salesTransactionData->getChange(), 2); ?></td>
         </tr>
         <tr>
             <td><b>Printed Date</b></td>
@@ -63,7 +63,7 @@ body {
         <tr>
             <td><b>User</b></td>
             <td>: </td>
-            <td><?php echo $salesTransactionData['username']; ?></td>
+            <td><?php echo $salesTransactionData->getUsername(); ?></td>
         </tr>
     </table><br>
 
@@ -78,15 +78,15 @@ body {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($salesTransactionDetailData as $detailData) : ?>
-                <tr>
-                    <td><?php echo $detailData['sales_transaction_code']; ?></td>
-                    <td><?php echo $detailData['product_name']; ?></td>
-                    <td><?php echo $detailData['quantity']; ?></td>
-                    <td>Rp<?php echo number_format($detailData['unit_price'], 2); ?></td>
-                    <td>Rp<?php echo number_format($detailData['subtotal'], 2); ?></td>
-                </tr>
-            <?php endforeach; ?>
+        <?php foreach ($salesTransactionDetailData as $detailData) : ?>
+            <tr>
+                <td><?php echo $detailData['sales_transaction_code']; ?></td>
+                <td><?php echo $detailData['product_name']; ?></td>
+                <td><?php echo $detailData['quantity']; ?></td>
+                <td>Rp<?php echo number_format($detailData['unit_price'], 2); ?></td>
+                <td>Rp<?php echo number_format($detailData['subtotal'], 2); ?></td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
     </div>

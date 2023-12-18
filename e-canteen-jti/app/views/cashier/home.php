@@ -97,13 +97,13 @@
     </div>
 
     <!-- Our Team -->
-    <div class="container our-team">
+<div class="container our-team">
       <h2 class="text-center">Our Team</h2><br>
       <div class="row">
       <div class="col-md-4">
           <div class="card text-center">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <img src="/assets/img/person.svg" class="card-img-top img-fluid" alt="...">
+              <img src="/assets/img/azhar.jpeg" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
                 <h5 class="card-title">AL AZHAR RIZQI RIFA'I FIRDAUS</h5>
                 <p class="card-text">2241720263</p>
@@ -114,10 +114,10 @@
       <div class="col-md-4">
           <div class="card text-center">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <img src="/assets/img/person.svg" class="card-img-top img-fluid" alt="...">
+              <img src="/assets/img/nanda.jpeg" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Yanuar Thaif Chalil Candra</h5>
-                <p class="card-text">2241720004</p>
+                <h5 class="card-title">Ananda Az Haruddin Salima</h5>
+                <p class="card-text">2241720071</p>
               </div>
             </div>
           </div>
@@ -125,10 +125,10 @@
       <div class="col-md-4">
           <div class="card text-center">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <img src="/assets/img/person.svg" class="card-img-top img-fluid" alt="...">
+              <img src="/assets/img/bagas.jpeg" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Virza Aulia Rachman</h5>
-                <p class="card-text">2241720078</p>
+                <h5 class="card-title">Gastiadirijal N.K.</h5>
+                <p class="card-text">2241720001</p>
               </div>
             </div>
           </div>
@@ -139,10 +139,10 @@
       <div class="col-md-4 mx-auto">
           <div class="card text-center">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <img src="/assets/img/person.svg" class="card-img-top img-fluid" alt="...">
+              <img src="/assets/img/maul.jpeg" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Yanuar Thaif Chalil Candra</h5>
-                <p class="card-text">2241720004</p>
+                <h5 class="card-title">Maulana Dwi Cahyono</h5>
+                <p class="card-text">2241720241</p>
               </div>
             </div>
           </div>
@@ -150,10 +150,10 @@
       <div class="col-md-4 mx-auto">
           <div class="card text-center">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <img src="/assets/img/person.svg" class="card-img-top img-fluid" alt="...">
+              <img src="/assets/img/nathan.jpeg" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Virza Aulia Rachman</h5>
-                <p class="card-text">2241720078</p>
+                <h5 class="card-title">Renathan Anggoro Arry Wibisono</h5>
+                <p class="card-text">2241720239</p>
               </div>
             </div>
           </div>

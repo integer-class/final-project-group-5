@@ -37,29 +37,27 @@ class Cashier {
         require_once '../app/views/cashier/report.php';
     }
 
-public function renderDetailReport() {
-    $salesTransactionId = $_GET['sales_transaction_id'] ?? null;
-
-    if (!$salesTransactionId) {
-        echo "Sales Transaction ID not provided.";
-        exit();
+    public function renderDetailReport() {
+        $salesTransactionId = $_GET['sales_transaction_id'] ?? null;
+    
+        if (!$salesTransactionId) {
+            echo "Sales Transaction ID not provided.";
+            exit();
+        }
+    
+        $salesTransaction = new SalesTransaction();
+        $salesTransactionData = $salesTransaction->getDataById($salesTransactionId);
+    
+        if (!$salesTransactionData) {
+            echo "Sales Transaction not found.";
+            exit();
+        }
+    
+        $salesTransactionDetail = new SalesTransactionDetail();
+        $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($salesTransactionData->getSalesTransactionCode());
+    
+        require_once '../app/views/admin/reportDetail.php';
     }
-
-    $salesTransaction = new SalesTransaction();
-    $salesTransactionData = $salesTransaction->getDataById($salesTransactionId);
-
-    if (!$salesTransactionData) {
-        echo "Sales Transaction not found.";
-        exit();
-    }
-
-    $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
-
-    $salesTransactionDetail = new SalesTransactionDetail();
-    $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
-
-    require_once '../app/views/cashier/reportDetail.php';
-}
 
 
     public function renderProduct() {
@@ -70,9 +68,10 @@ public function renderDetailReport() {
 
     public function getProductName() {
         if (isset($_POST['product_name'])) {
-            $product_name = $_POST['product_name'];
             $product = new Product();
-            $product_data = $product->getDataByProductName($product_name);
+            $product->setProductName($_POST['product_name']);
+            $product_name = $product->getProductName();
+            $product_data = $product->getDataByName($product_name);
 
             require_once '../app/views/cashier/product.php';
         }
@@ -98,25 +97,6 @@ public function renderDetailReport() {
         require_once '../app/views/cashier/productDetail.php';
     }
 
-    public function generateReceipt($salesData, $salesTransactionDetail) {
-        $receipt = "=== SALES RECEIPT ===\n";
-        $receipt .= "Transaction Code: " . $salesData['sales_transaction_code'] . "\n";
-        $receipt .= "Date: " . $salesData['sales_transaction_date'] . "\n";
-        
-        $receipt .= "\n=== ITEMS ===\n";
-        $receipt .= "Product Name | Qty | Price | Subtotal\n";
-        foreach ($salesTransactionDetail as $detail) {
-            $receipt .= $detail['product_name'] . " | " . $detail['quantity'] . " | " . $detail['sell_price'] . " | " . $detail['subtotal'] . "\n";
-        }
-    
-        $receipt .= "\n=== PAYMENT INFO ===\n";
-        $receipt .= "Total: " . $salesData['total'] . "\n";
-        $receipt .= "Paid: " . $salesData['paid'] . "\n";
-        $receipt .= "Change: " . $salesData['change'] . "\n";
-    
-        return $receipt;
-    }
-
     public function processSale() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['quantity'], $_POST['paid'], $_POST['user_id'])) {
@@ -126,12 +106,12 @@ public function renderDetailReport() {
                 $sales_transaction_code = "TRANSACTION-" . strval(rand(100000, 999999));
                 
                 $totalAmount = 0;
-    
+
                 foreach ($_POST['quantity'] as $productId => $quantity) {
                     $product = new Product();
                     $productData = $product->getDataById($productId); 
-                    $productPrice = isset($productData['sell_price']) ? $productData['sell_price'] : 0; 
-    
+                    $productPrice = $productData ? $productData->getSellPrice() : 0;
+
                     $detailData = [
                         'sales_transaction_code' => $sales_transaction_code,
                         'product_id' => $productId,
@@ -139,21 +119,20 @@ public function renderDetailReport() {
                         'quantity' => $quantity,
                         'subtotal' => $quantity * $productPrice,
                     ];
-    
+
                     $totalAmount += $detailData['subtotal'];
                     $salesTransactionDetail->create($detailData);
-    
-                    $updatedStock = $productData['stock'] - $quantity;
-    
+
+                    $updatedStock = $productData->getStock() - $quantity;
+
                     $updateStockData = [
                         'product_id' => $productId,
                         'stock' => $updatedStock,
-
                     ];
-    
+
                     $product->updateStock($updateStockData);
                 }
-    
+
                 $salesData = [
                     'sales_transaction_date' => date('Y-m-d'), 
                     'sales_transaction_code' => $sales_transaction_code,
@@ -166,8 +145,7 @@ public function renderDetailReport() {
                 $salesTransaction->create($salesData);
 
                 $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code); 
-                self::generateReceipt($salesData, $salesTransactionDetailData);
-    
+
                 header('Location: /cashier/sales');
                 exit();
             } else {
@@ -178,12 +156,6 @@ public function renderDetailReport() {
         }
     }
 
-
-    
-    
-    
-    
-    
 }
 
 ?>

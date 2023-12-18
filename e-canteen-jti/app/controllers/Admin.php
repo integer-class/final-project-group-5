@@ -9,11 +9,14 @@ use models\SalesTransaction;
 require_once '../app/models/SalesTransaction.php';
 use models\SalesTransactionDetail;
 require_once '../app/models/SalesTransactionDetail.php';
+use controllers\MasterController;
+require_once '../app/controllers/MasterController.php';
 
-class Admin {
+class Admin extends MasterController {
     public function __construct() {
         Auth::checkAuth('admin');
     }
+    
     // render section
     public function renderHome() {
         require_once '../app/views/admin/home.php';
@@ -27,9 +30,10 @@ class Admin {
 
     public function getUsername() {
         if (isset($_POST['username'])) {
-            $username = $_POST['username'];
             $user = new User();
-            $user_data = $user->getDataByUsername($username);
+            $user->setUsername($_POST['username']);
+            $username = $user->getUsername();
+            $user_data = $user->getDataByName($username);
 
             require_once '../app/views/admin/user.php';
         }
@@ -43,9 +47,10 @@ class Admin {
 
     public function getProductName() {
         if (isset($_POST['product_name'])) {
-            $product_name = $_POST['product_name'];
             $product = new Product();
-            $product_data = $product->getDataByProductName($product_name);
+            $product->setProductName($_POST['product_name']);
+            $product_name = $product->getProductName();
+            $product_data = $product->getDataByName($product_name);
 
             require_once '../app/views/admin/product.php';
         }
@@ -100,14 +105,15 @@ class Admin {
     }
 
     public function renderEditUser() {
-        $user_id = $_GET['user_id'] ?? null;
+        $user = new User();
+        $user->setUserId($_GET['user_id']);
+        $user_id = $user->getUserId();
         
         if (!$user_id) {
             echo "User ID not provided.";
             exit();
         }
 
-        $user = new User();
         $userData = $user->getDataById($user_id);
 
         if ($userData) {
@@ -148,10 +154,8 @@ class Admin {
             exit();
         }
     
-        $sales_transaction_code = $salesTransactionData['sales_transaction_code'];
-    
         $salesTransactionDetail = new SalesTransactionDetail();
-        $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code);
+        $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($salesTransactionData->getSalesTransactionCode());
     
         require_once '../app/views/admin/reportDetail.php';
     }
@@ -161,13 +165,22 @@ class Admin {
     public function createUser() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User();
+
+            $user->setUsername($_POST['username']);
+            $user->setPassword(md5($_POST['password']));
+            $user->setEmail($_POST['email']);
+            $user->setRole($_POST['role']);
+            $user->setAddress($_POST['address']);
+            $user->setPhoneNumber($_POST['phone_number']);
             
-            $data['username'] = $_POST['username'] ?? '';
-            $data['password'] = $_POST['password'] ?? '';
-            $data['email'] = $_POST['email'] ?? '';
-            $data['role'] = $_POST['role'] ?? '';
-            $data['address'] = $_POST['address'] ?? '';
-            $data['phone_number'] = $_POST['phone_number'] ?? '';
+            $data = [
+                'username' => $user->getUsername(),
+                'password' => $user->getPassword(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRole(),
+                'address' => $user->getAddress(),
+                'phone_number' => $user->getPhoneNumber()
+            ];
             
             $result = $user->create($data);
             if ($result) {
@@ -183,13 +196,23 @@ class Admin {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User();
             
-            $data['user_id'] = $_POST['user_id'] ?? '';
-            $data['username'] = $_POST['username'] ?? '';
-            $data['password'] = $_POST['password'] ?? '';
-            $data['email'] = $_POST['email'] ?? '';
-            $data['role'] = $_POST['role'] ?? '';
-            $data['address'] = $_POST['address'] ?? '';
-            $data['phone_number'] = $_POST['phone_number'] ?? '';
+            $user->setUserId($_POST['user_id']);
+            $user->setUsername($_POST['username']);
+            $user->setPassword(md5($_POST['password']));
+            $user->setEmail($_POST['email']);
+            $user->setRole($_POST['role']);
+            $user->setAddress($_POST['address']);
+            $user->setPhoneNumber($_POST['phone_number']);
+            
+            $data = [
+                'user_id' => $user->getUserId(),
+                'username' => $user->getUsername(),
+                'password' => $user->getPassword(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRole(),
+                'address' => $user->getAddress(),
+                'phone_number' => $user->getPhoneNumber()
+            ];
             
             $result = $user->update($data);
             if ($result) {
@@ -204,9 +227,9 @@ class Admin {
     public function deleteUser() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User();
-            
-            $user_id = $_POST['user_id'] ?? '';
-            
+
+            $user->setUserId($_POST['user_id']);
+            $user_id = $user->getUserId();
             $result = $user->delete($user_id);
             if ($result) {
                 header('Location: /admin/user');
@@ -222,16 +245,27 @@ class Admin {
     public function createProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
-            $product_code = "PRODUCT-" . strval(rand(1000000000, 9999999999));
-            
-            $data['product_code'] = $product_code ?? '';
-            $data['product_name'] = $_POST['product_name'] ?? '';
-            $data['supplier_name'] = $_POST['supplier_name'] ?? '';
-            $data['description'] = $_POST['description'] ?? '';
-            $data['category'] = $_POST['category'] ?? '';
-            $data['stock'] = $_POST['stock'] ?? '';
-            $data['buy_price'] = $_POST['buy_price'] ?? '';
-            $data['sell_price'] = $_POST['sell_price'] ?? '';
+            $product->setProductCode("PRODUCT-" . strval(rand(1000000000, 9999999999)));
+            $product->setProductName($_POST['product_name']);
+            $product->setSupplierName($_POST['supplier_name']);
+            $product->setDescription($_POST['description']);
+            $product->setCategory($_POST['category']);
+            $product->setStock($_POST['stock']);
+            $product->setBuyPrice($_POST['buy_price']);
+            $product->setSellPrice($_POST['sell_price']);
+            $product->setImage($_FILES['image']);
+
+            $data = [
+                'product_code' => $product->getProductCode(),
+                'product_name' => $product->getProductName(),
+                'supplier_name' => $product->getSupplierName(),
+                'description' => $product->getDescription(),
+                'category' => $product->getCategory(),
+                'stock' => $product->getStock(),
+                'buy_price' => $product->getBuyPrice(),
+                'sell_price' => $product->getSellPrice(),
+                'image' => $product->getImage()
+            ];
             $targetDirectory = "/opt/lampp/htdocs/final-project-group-5/e-canteen-jti/public/uploads/";
             if (!file_exists($targetDirectory)) {
                 mkdir($targetDirectory, 0777, true);
@@ -241,19 +275,18 @@ class Admin {
             $allowedExtensions = array("jpg", "jpeg", "png", "gif");
             $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
     
-            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+            $maxFileSize = 5 * 1024 * 1024;
     
             if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 if (in_array($fileType, $allowedExtensions) && $_FILES["image"]["size"] <= $maxFileSize) {
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                        $data['image'] = $targetFile; // Isi nama file gambar ke variabel $data['image']
+                        $data['image'] = $targetFile;
                     }
                 } else {
                     echo "Invalid file format or file size exceeds limit.";
                     exit;
                 }
             } else {
-                // handle error, e.g., set a default image or show an error message
                 echo "File upload error.";
                 exit;
             }
@@ -271,16 +304,29 @@ class Admin {
     public function editProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
-            
-            $data['product_id'] = $_POST['product_id'] ?? '';
-            $data['product_code'] = $_POST['product_code'] ?? '';
-            $data['product_name'] = $_POST['product_name'] ?? '';
-            $data['supplier_name'] = $_POST['supplier_name'] ?? '';
-            $data['description'] = $_POST['description'] ?? '';
-            $data['category'] = $_POST['category'] ?? '';
-            $data['stock'] = $_POST['stock'] ?? '';
-            $data['buy_price'] = $_POST['buy_price'] ?? '';
-            $data['sell_price'] = $_POST['sell_price'] ?? '';
+
+            $product->setProductId($_POST['product_id']);
+            $product->setProductCode($_POST['product_code']);
+            $product->setProductName($_POST['product_name']);
+            $product->setSupplierName($_POST['supplier_name']);
+            $product->setDescription($_POST['description']);
+            $product->setCategory($_POST['category']);
+            $product->setStock($_POST['stock']);
+            $product->setBuyPrice($_POST['buy_price']);
+            $product->setSellPrice($_POST['sell_price']);
+            $product->setImage($_FILES['image']);
+            $data = [
+                'product_id' => $product->getProductId(),
+                'product_code' => $product->getProductCode(),
+                'product_name' => $product->getProductName(),
+                'supplier_name' => $product->getSupplierName(),
+                'description' => $product->getDescription(),
+                'category' => $product->getCategory(),
+                'stock' => $product->getStock(),
+                'buy_price' => $product->getBuyPrice(),
+                'sell_price' => $product->getSellPrice(),
+                'image' => $product->getImage()
+            ];
             $targetDirectory = "/opt/lampp/htdocs/final-project-group-5/e-canteen-jti/public/uploads/";
             if (!file_exists($targetDirectory)) {
                 mkdir($targetDirectory, 0777, true);
@@ -290,19 +336,18 @@ class Admin {
             $allowedExtensions = array("jpg", "jpeg", "png", "gif");
             $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
     
-            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+            $maxFileSize = 5 * 1024 * 1024;
     
             if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 if (in_array($fileType, $allowedExtensions) && $_FILES["image"]["size"] <= $maxFileSize) {
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                        $data['image'] = $targetFile; // Isi nama file gambar ke variabel $data['image']
+                        $data['image'] = $targetFile;
                     }
                 } else {
                     echo "Invalid file format or file size exceeds limit.";
                     exit;
                 }
             } else {
-                // handle error, e.g., set a default image or show an error message
                 echo "File upload error.";
                 exit;
             }
@@ -317,12 +362,11 @@ class Admin {
         }
     }
     
-
     public function deleteProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = new Product();
-            
-            $product_id = $_POST['product_id'] ?? '';
+            $product->setProductId($_POST['product_id']);
+            $product_id = $product->getProductId();
             
             $result = $product->delete($product_id);
             if ($result) {

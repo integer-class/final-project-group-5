@@ -7,19 +7,77 @@ require_once 'MasterData.php';
 use models\MasterData;
 
 class User extends MasterData {
-    private $user_id;
-    private $username;
-    private $password;
-    private $email;
-    private $role;
-    private $address;
-    private $phone_number;
-    private $connect;
+    protected $user_id;
+    protected $username;
+    protected $password;
+    protected $email;
+    protected $role;
+    protected $address;
+    protected $phone_number;
+    protected $connect;
 
     public function __construct() {
         $connection = new Connection();
         $this->connect = $connection->connect;
     }
+
+        // Metode setter
+        public function setUserId($user_id) {
+            $this->user_id = $user_id;
+        }
+    
+        public function setUsername($username) {
+            $this->username = $username;
+        }
+    
+        public function setPassword($password) {
+            $this->password = $password;
+        }
+    
+        public function setEmail($email) {
+            $this->email = $email;
+        }
+    
+        public function setRole($role) {
+            $this->role = $role;
+        }
+    
+        public function setAddress($address) {
+            $this->address = $address;
+        }
+    
+        public function setPhoneNumber($phone_number) {
+            $this->phone_number = $phone_number;
+        }
+    
+        // Metode getter
+        public function getUserId() {
+            return $this->user_id;
+        }
+    
+        public function getUsername() {
+            return $this->username;
+        }
+    
+        public function getPassword() {
+            return $this->password;
+        }
+    
+        public function getEmail() {
+            return $this->email;
+        }
+    
+        public function getRole() {
+            return $this->role;
+        }
+    
+        public function getAddress() {
+            return $this->address;
+        }
+    
+        public function getPhoneNumber() {
+            return $this->phone_number;
+        }
 
     public function getUserDataLogin($username, $password) {
         $query = "SELECT * FROM User WHERE username = ? AND password = ?";
@@ -35,8 +93,67 @@ class User extends MasterData {
     public function getAll() {
         $query = "SELECT * FROM User";
         $result = mysqli_query($this->connect, $query);
-        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        return $row;
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $users = [];
+        foreach ($rows as $row) {
+            $user = new User();
+            $user->setUserId($row['user_id']);
+            $user->setUsername($row['username']);
+            $user->setPassword($row['password']);
+            $user->setEmail($row['email']);
+            $user->setRole($row['role']);
+            $user->setAddress($row['address']);
+            $user->setPhoneNumber($row['phone_number']);
+            $users[] = $user;
+        }
+    
+        return $users;
+    }
+
+    public function getDataById($user_id) {
+        $query = "SELECT * FROM User WHERE user_id = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 'i', $user_id);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $row = mysqli_fetch_assoc($result);
+    
+        if ($row) {
+            $user = new User();
+            $user->setUserId($row['user_id']);
+            $user->setUsername($row['username']);
+            $user->setPassword($row['password']);
+            $user->setEmail($row['email']);
+            $user->setRole($row['role']);
+            $user->setAddress($row['address']);
+            $user->setPhoneNumber($row['phone_number']);
+            return $user;
+        }
+    
+        return null;
+    }
+
+    public function getDataByName($username) {
+        $query = "SELECT * FROM User WHERE username = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 's', $username);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $users = [];
+        foreach ($rows as $row) {
+            $user = new User();
+            $user->setUserId($row['user_id']);
+            $user->setUsername($row['username']);
+            $user->setPassword($row['password']);
+            $user->setEmail($row['email']);
+            $user->setRole($row['role']);
+            $user->setAddress($row['address']);
+            $user->setPhoneNumber($row['phone_number']);
+            $users[] = $user;
+        }
+        return $users;
     }
 
     public function create($data) {
@@ -63,30 +180,6 @@ class User extends MasterData {
         return $result;
     }
 
-    public function getDataById($user_id) {
-        $query = "SELECT * FROM User WHERE user_id = ?";
-        $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 'i', $user_id);
-        mysqli_stmt_execute($statement);
-        $result = mysqli_stmt_get_result($statement);
-        $row = mysqli_fetch_assoc($result);
-        return $row;
-    }
-
-    public function getDataByUsername($username) {
-        $query = "SELECT * FROM User WHERE username = ?";
-        $statement = mysqli_prepare($this->connect, $query);
-        mysqli_stmt_bind_param($statement, 's', $username);
-        mysqli_stmt_execute($statement);
-        $result = mysqli_stmt_get_result($statement);
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        mysqli_free_result($result);
-        return $data;
-    }
-
-    public function getUserId() {
-        return $this->user_id;
-    }
 }
 
 ?>

@@ -114,17 +114,15 @@
         <tbody>
             <?php foreach ($product_data as $product) { ?>
             <tr>
-                <td><?php echo $product['product_code']; ?></td>
-                <td><?php echo $product['product_name']; ?></td>
-                <td><?php echo $product['supplier_name']; ?></td>
-                <td><?php echo $product['category']; ?></td>
-                <td><?php echo $product['stock']; ?></td>
-                <td>Rp<?php echo number_format($product['buy_price'], 2); ?></td>
-                <td>Rp<?php echo number_format($product['sell_price'], 2); ?></td>
+                <td><?php echo $product->getProductCode(); ?></td>
+                <td><?php echo $product->getProductName(); ?></td>
+                <td><?php echo $product->getSupplierName(); ?></td>
+                <td><?php echo $product->getCategory(); ?></td>
+                <td><?php echo $product->getStock(); ?></td>
+                <td>Rp<?php echo number_format($product->getBuyPrice(), 2); ?></td>
+                <td>Rp<?php echo number_format($product->getSellPrice(), 2); ?></td>
                 <td>
-                <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/cashier/detailProduct?product_id=<?php echo $product['product_id']; ?>">Detail</a>
-                </div>
+                  <a style="width: 100%;" class="btn btn-dark" href="/cashier/detailProduct?product_id=<?php echo $product->getProductId(); ?>">Detail</a>
             </td>
             </tr>
             <?php } ?>

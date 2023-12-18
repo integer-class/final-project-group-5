@@ -77,20 +77,20 @@ body {
         <tbody>
             <?php foreach ($user_data as $user) { ?>
             <tr>
-                <td><?php echo $user['user_id']; ?></td>
-                <td><?php echo $user['username']; ?></td>
-                <td><?php echo $user['email']; ?></td>
-                <td><?php echo $user['role']; ?></td>
-                <td><?php echo $user['address']; ?></td>
-                <td><?php echo $user['phone_number']; ?></td>
+                <td><?php echo $user->getUserId(); ?></td>
+                <td><?php echo $user->getUsername(); ?></td>
+                <td><?php echo $user->getEmail(); ?></td>
+                <td><?php echo $user->getRole(); ?></td>
+                <td><?php echo $user->getAddress(); ?></td>
+                <td><?php echo $user->getPhoneNumber(); ?></td>
                 <td>
               <div class="row">
                 <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editUser?user_id=<?php echo $user['user_id']; ?>">Edit</a>
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editUser?user_id=<?php echo $user->getUserId(); ?>">Edit</a>
                 </div>
                 <div class="col">
                   <form action="/admin/deleteUser" method="post">
-                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $user->getUserId(); ?>">
                     <button style="width: 100%;" type='submit' class="btn btn-dark">Delete</button>
                   </form>
                 </div>

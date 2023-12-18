@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         .navbar a:hover {
@@ -74,16 +74,16 @@ body {
         <tbody>
             <?php foreach ($salesTransactionData as $transaction) : ?>
                 <?php
-                    $date = date('Y-m-d', strtotime($transaction['sales_transaction_date']));    
+                    $date = date('Y-m-d', strtotime($transaction->getSalesTransactionDate()));    
                 ?>
                 <tr>
-                    <td><?php echo $transaction['sales_transaction_code']; ?></td>
+                    <td><?php echo $transaction->getSalesTransactionCode(); ?></td>
                     <td><?php echo $date; ?></td>
-                    <td>Rp<?php echo number_format($transaction['total'], 2); ?></td>
-                    <td>Rp<?php echo number_format($transaction['paid'], 2); ?></td>
-                    <td>Rp<?php echo number_format($transaction['change'], 2); ?></td>
-                    <td><?php echo $transaction['username']; ?></td>
-                    <td><a class="btn btn-dark" href="/admin/detailReport?sales_transaction_id=<?php echo $transaction['sales_transaction_id']; ?>">Print Detail Report</a></td>
+                    <td>Rp<?php echo number_format($transaction->getTotal(), 2); ?></td>
+                    <td>Rp<?php echo number_format($transaction->getPaid(), 2); ?></td>
+                    <td>Rp<?php echo number_format($transaction->getChange(), 2); ?></td>
+                    <td><?php echo $transaction->getUsername(); ?></td>
+                    <td><a class="btn btn-dark" href="/admin/detailReport?sales_transaction_id=<?php echo $transaction->getSalesTransactionId(); ?>">Print Detail Report</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

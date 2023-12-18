@@ -61,34 +61,34 @@ body {
   <div class="container">
     <h2>Edit User</h2>
     <form action="/admin/editUser" method="POST">
-    <input type="hidden" name="user_id" value="<?php echo $userData['user_id']; ?>">
+    <input type="hidden" name="user_id" value="<?php echo $userData->getUserId(); ?>">
 
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" name="username" value="<?php echo $userData['username']; ?>" required>
+        <input type="text" class="form-control" id="username" name="username" value="<?php echo $userData->getUsername(); ?>" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" value="<?php echo $userData['password']; ?>" required>
+        <input type="password" class="form-control" id="password" name="password" value="<?php echo $userData->getPassword(); ?>" required>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email" value="<?php echo $userData['email']; ?>" required>
+        <input type="email" class="form-control" id="email" name="email" value="<?php echo $userData->getEmail(); ?>" required>
       </div>
       <div class="mb-3">
         <label for="role" class="form-label">Role</label>
         <select class="form-select" id="role" name="role" required>
-          <option value="admin" <?php if ($userData['role'] === 'admin') echo 'selected'; ?>>Admin</option>
-          <option value="cashier" <?php if ($userData['role'] === 'cashier') echo 'selected'; ?>>Cashier</option>
+          <option value="admin" <?php if ($userData->getRole() === 'admin') echo 'selected'; ?>>Admin</option>
+          <option value="cashier" <?php if ($userData->getRole() === 'cashier') echo 'selected'; ?>>Cashier</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="address" class="form-label">Address</label>
-        <textarea class="form-control" name="address" id="address" placeholder="Address" rows="4" cols="50" required><?php echo $userData['address']; ?></textarea>
+        <textarea class="form-control" name="address" id="address" placeholder="Address" rows="4" cols="50" required><?php echo $userData->getAddress(); ?></textarea>
       </div>
       <div class="mb-3">
         <label for="phone_number" class="form-label">Phone Number</label>
-        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $userData['phone_number']; ?>" required>
+        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $userData->getPhoneNumber(); ?>" required>
       </div>
       <button type="submit" class="btn btn-dark">Edit</button>
     </form>

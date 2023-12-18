@@ -10,6 +10,7 @@ class Connection {
     public $connect;
 
     public function __construct() {
+        
         $this->connect = mysqli_connect($this->server, $this->username, $this->password, $this->database);
 
         // if (mysqli_connect_errno()) {

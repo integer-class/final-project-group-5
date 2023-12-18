@@ -58,19 +58,19 @@ body {
   </nav><br>
 
   <div class="container">
-
+  <h2>Detail Product</h2>
   <div class="card mx-auto" style="width: 18rem;">
-  <img src="/uploads/<?php echo basename($productData['image']); ?>" class="card-img-top" alt="...">
+  <img src="/uploads/<?php echo basename($productData->getImage()); ?>" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title"><?php echo $productData['product_name']; ?></h5>
-    <p class="card-text">Product Id : <?php echo $productData['product_id']; ?></p>
-    <p class="card-text">Product Code : <?php echo $productData['product_code']; ?></p>
-    <p class="card-text">Supplier Name : <?php echo $productData['supplier_name']; ?></p>
-    <p class="card-text">Description : <?php echo $productData['Description']; ?></p>
-    <p class="card-text">Category : <?php echo $productData['category']; ?></p>
-    <p class="card-text">Stock : <?php echo $productData['stock']; ?></p>
-    <p class="card-text">Buy Price : Rp<?php echo number_format($productData['buy_price'], 2); ?></p>
-    <p class="card-text">Sell Price : Rp<?php echo number_format($productData['sell_price'], 2); ?></p>
+    <h5 class="card-title"><?php echo $productData->getProductName(); ?></h5>
+    <p class="card-text">Product Id : <?php echo $productData->getProductId(); ?></p>
+    <p class="card-text">Product Code : <?php echo $productData->getProductCode(); ?></p>
+    <p class="card-text">Supplier Name : <?php echo $productData->getSupplierName(); ?></p>
+    <p class="card-text">Description : <?php echo $productData->getDescription(); ?></p>
+    <p class="card-text">Category : <?php echo $productData->getCategory(); ?></p>
+    <p class="card-text">Stock : <?php echo $productData->getStock(); ?></p>
+    <p class="card-text">Buy Price : Rp<?php echo number_format($productData->getBuyPrice(), 2); ?></p>
+    <p class="card-text">Sell Price : Rp<?php echo number_format($productData->getSellPrice(), 2); ?></p>
   </div>
 </div><br>
 

@@ -2,13 +2,17 @@
 
 namespace models;
 
-class MasterData {
+abstract class MasterData {
 
     public function getAll() {
     return;
     }
 
     public function getDataById($id) {
+        return;
+    }
+
+    public function getDataByName($data) {
         return;
     }
 

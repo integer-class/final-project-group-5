@@ -75,18 +75,18 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($salesTransactionData as $transaction) : ?>
+        <?php foreach ($salesTransactionData as $transaction) : ?>
                 <?php
-                    $date = date('Y-m-d', strtotime($transaction['sales_transaction_date']));    
+                    $date = date('Y-m-d', strtotime($transaction->getSalesTransactionDate()));    
                 ?>
                 <tr>
-                    <td><?php echo $transaction['sales_transaction_code']; ?></td>
+                    <td><?php echo $transaction->getSalesTransactionCode(); ?></td>
                     <td><?php echo $date; ?></td>
-                    <td>Rp<?php echo number_format($transaction['total'], 2); ?></td>
-                    <td>Rp<?php echo number_format($transaction['paid'], 2); ?></td>
-                    <td>Rp<?php echo number_format($transaction['change'], 2); ?></td>
-                    <td><?php echo $transaction['username']; ?></td>
-                    <td><a class="btn btn-dark" href="/cashier/detailReport?sales_transaction_id=<?php echo $transaction['sales_transaction_id']; ?>">Print Detail Report</a></td>
+                    <td>Rp<?php echo number_format($transaction->getTotal(), 2); ?></td>
+                    <td>Rp<?php echo number_format($transaction->getPaid(), 2); ?></td>
+                    <td>Rp<?php echo number_format($transaction->getChange(), 2); ?></td>
+                    <td><?php echo $transaction->getUsername(); ?></td>
+                    <td><a class="btn btn-dark" href="/cashier/detailReport?sales_transaction_id=<?php echo $transaction->getSalesTransactionId(); ?>">Print Detail Report</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

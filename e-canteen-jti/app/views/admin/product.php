@@ -81,25 +81,25 @@ body {
         <tbody>
             <?php foreach ($product_data as $product) { ?>
             <tr>
-                <td><?php echo $product['product_id']; ?></td>
-                <td><?php echo $product['product_code']; ?></td>
-                <td><?php echo $product['product_name']; ?></td>
-                <td><?php echo $product['supplier_name']; ?></td>
-                <td><?php echo $product['category']; ?></td>
-                <td><?php echo $product['stock']; ?></td>
-                <td>Rp<?php echo number_format($product['buy_price'], 2); ?></td>
-                <td>Rp<?php echo number_format($product['sell_price'], 2); ?></td>
+                <td><?php echo $product->getProductId(); ?></td>
+                <td><?php echo $product->getProductCode(); ?></td>
+                <td><?php echo $product->getProductName(); ?></td>
+                <td><?php echo $product->getSupplierName(); ?></td>
+                <td><?php echo $product->getCategory(); ?></td>
+                <td><?php echo $product->getStock(); ?></td>
+                <td>Rp<?php echo number_format($product->getBuyPrice(), 2); ?></td>
+                <td>Rp<?php echo number_format($product->getSellPrice(), 2); ?></td>
                 <td>
               <div class="row">
                 <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editProduct?product_id=<?php echo $product['product_id']; ?>">Edit</a>
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editProduct?product_id=<?php echo $product->getProductId(); ?>">Edit</a>
                 </div>
                 <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/admin/detailProduct?product_id=<?php echo $product['product_id']; ?>">Detail</a>
+                  <a style="width: 100%;" class="btn btn-dark" href="/admin/detailProduct?product_id=<?php echo $product->getProductId(); ?>">Detail</a>
                 </div>
                 <div class="col">
                   <form action="/admin/deleteProduct" method="post">
-                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                    <input type="hidden" name="product_id" value="<?php echo $product->getProductId(); ?>">
                     <button style="width: 100%;" type='submit' class="btn btn-dark">Delete</button>
                   </form>
                 </div>
