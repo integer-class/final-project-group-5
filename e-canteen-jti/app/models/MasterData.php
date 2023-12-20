@@ -2,7 +2,7 @@
 
 namespace models;
 
-abstract class MasterData {
+class MasterData {
 
     public function getAll() {
     return;

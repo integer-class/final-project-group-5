@@ -9,10 +9,8 @@ use models\SalesTransaction;
 require_once '../app/models/SalesTransaction.php';
 use models\SalesTransactionDetail;
 require_once '../app/models/SalesTransactionDetail.php';
-use controllers\MasterController;
-require_once '../app/controllers/MasterController.php';
 
-class Admin extends MasterController {
+class Admin {
     public function __construct() {
         Auth::checkAuth('admin');
     }

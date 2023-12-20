@@ -40,6 +40,10 @@
           width: 50%;
           
         }
+
+        .description {
+          margin-top: 200px;
+        }
         footer {
           margin-top: 100px;
           bottom: 0;
@@ -95,6 +99,13 @@
     </div>
   </div>
     </div>
+
+        <!-- description -->
+        <div class="container description">
+      <h2 class="text-center">Description</h2><br>
+      <p class="text-center">The campus e-canteen is a canteen digitization system on the Malang State Polytechnic campus that uses information technology to facilitate the process of buying and selling food and drinks. This system adopts an online food ordering system using a special application. E-canteen campus is one of the innovations that can be applied on campus to improve the quality of canteen services and be more efficient, fast,</p>
+    </div>
+
 
     <!-- Our Team -->
 <div class="container our-team">
