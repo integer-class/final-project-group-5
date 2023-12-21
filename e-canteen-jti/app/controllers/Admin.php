@@ -130,6 +130,17 @@ class Admin {
         require_once '../app/views/admin/report.php';
     }
 
+    public function getReportByDate() {
+        if (isset($_POST['date'])) {
+            $salesTransaction = new SalesTransaction();
+            $salesTransaction->setSalesTransactionDate($_POST['date']);
+            $date = $salesTransaction->getSalesTransactionDate();
+            $salesTransactionData = $salesTransaction->getDataByDate($date);
+
+            require_once '../app/views/admin/report.php';
+        }
+    }
+
     public function renderPrintReport() {
         $salesTransaction = new SalesTransaction();
         $salesTransactionData = $salesTransaction->getAll();

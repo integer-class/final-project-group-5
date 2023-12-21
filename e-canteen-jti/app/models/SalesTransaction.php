@@ -130,6 +130,32 @@ class SalesTransaction extends MasterData {
         }
         return null;
     }
+
+    public function getDataByDate($date) {
+        $query = "SELECT s.*, u.username
+        FROM Sales AS s
+        JOIN User AS u ON u.user_id = s.user_id
+        WHERE DATE(sales_transaction_date) = ?";
+        $statement = mysqli_prepare($this->connect, $query);
+        mysqli_stmt_bind_param($statement, 's', $date);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $sales = [];
+        foreach ($rows as $row) {
+            $sales_transaction = new SalesTransaction();
+            $sales_transaction->setSalesTransactionId($row['sales_transaction_id']);
+            $sales_transaction->setSalesTransactionCode($row['sales_transaction_code']);
+            $sales_transaction->setSalesTransactionDate($row['sales_transaction_date']);
+            $sales_transaction->setTotal($row['total']);
+            $sales_transaction->setPaid($row['paid']);
+            $sales_transaction->setChange($row['change']);
+            $sales_transaction->setUserId($row['user_id']);
+            $sales_transaction->setUsername($row['username']);
+            $sales[] = $sales_transaction;
+        }
+        return $sales;
+    }
     
    
 }

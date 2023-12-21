@@ -34,6 +34,9 @@ $route->add('POST', '/admin/editUser', Admin::class, 'editUser');
 $route->add('POST', '/admin/deleteUser', Admin::class, 'deleteUser');
 $route->add('POST', '/admin/getUsername', Admin::class, 'getUsername');
 
+$route->add('POST', '/admin/getReportByDate', Admin::class, 'getReportByDate');
+$route->add('POST', '/cashier/getReportByDate', Cashier::class, 'getReportByDate');
+
 // crud product
 $route->add('POST', '/admin/createProduct', Admin::class, 'createProduct');
 $route->add('POST', '/admin/editProduct', Admin::class, 'editProduct');

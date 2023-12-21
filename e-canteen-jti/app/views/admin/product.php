@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .navbar a:hover {
     font-weight: bold;
@@ -21,48 +22,105 @@
 body {
   font-family: 'Quicksand', sans-serif;
 }
+.sidebar img {
+          width: 50px;
+          margin-top: 20px;
+        }
+.sidebar {
+          margin-left: -50px;
+          position: fixed;
+        }
+        .sidebar ul {
+          margin-top: 30px;
+        }
+        .sidebar ul li a {
+          text-align: center;
+          margin-block: 30px;
+        }
+        .nav-link:hover {
+          background-color: #f3bb23;
+          color: #000000;
+          font-weight: bold;
+          border-radius: 10px;
+          
+        }
+        .logout {
+          margin-top: 120px;
+        }
+        .content {
+          margin-right: -30px;
+          margin-top: 30px;
+        }
+        .addUser {
+          background-color: #0c1c43;
+          color: #FFFFFF;
+        }
+        .nav-link:hover {
+          background-color: #0c1c43;
+          color: #FFFFFF;
+          font-weight: bold;
+          border-radius: 10px;
+        }
+        .editUser {
+          background-color: #fbb217;
+          color: #FFFFFF;
+        }
+        .editUser:hover {
+          background-color: #FFFFFF;
+          color: #fbb217;
+          border: #fbb217 solid 2px;
+          font-weight: bold;
+        }
+        .deleteUser {
+          background-color: #9A3C32;
+          color: #FFFFFF;
+
+      }
+      .deleteUser:hover {
+          background-color: #FFFFFF;
+          color: #9A3C32;
+          border: #9A3C32 solid 2px;
+          font-weight: bold;
+      }
     </style>
   </head>
   <body>
-    
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-white">
-    <div class="container">
-      <a class="navbar-brand" href="#">E-Canteen JTI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+  <div class="container">
+    <div class="row">
+    <div class="col-md-0">
+        <!-- sidebar -->
+        <div class="sidebar">
+            <img src="/assets/img/logo.png" alt="">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/admin/home">Home</a>
+            <a class="nav-link" aria-current="page" href="/admin/home"><i class="fa-solid fa-house"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/user">User</a>
+            <a class="nav-link" href="/admin/user"><i class="fa-solid fa-user"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/admin/product">Product</a>
+            <a class="nav-link" href="/admin/product"><i class="fa-solid fa-box"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/report">Report</a>
+            <a class="nav-link" href="/admin/report"><i class="fa-solid fa-clipboard-list"></i></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+          <li class="nav-item logout">
+            <a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
           </li>
         </ul>
+            </div>
       </div>
-    </div>
-  </nav>
-
-  <!-- content -->
-  <div class="container">
+      <div class="col-md-12">
+          <!-- content -->
+  <div class="container content">
     <h2>Product management</h2>
             <!-- Search Form -->
             <form class="d-flex" role="search" action="/admin/getProductName" method="post">
         <input class="form-control me-2" type="text" placeholder="Search Product Name" aria-label="Search" name="product_name">
-        <button class="btn btn-dark" type="submit">Search</button>
+        <button class="btn addUser" type="submit">Search</button>
       </form><br>
-    <a class="btn btn-dark" href="/admin/createProduct">Add Product</a>
+    <a class="btn addUser" href="/admin/createProduct">Add Product</a>
 
     <table class="table table-striped table-hover">
         <thead>
@@ -92,15 +150,15 @@ body {
                 <td>
               <div class="row">
                 <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/admin/editProduct?product_id=<?php echo $product->getProductId(); ?>">Edit</a>
+                  <a style="width: 100%;" class="btn editUser" href="/admin/editProduct?product_id=<?php echo $product->getProductId(); ?>">Edit</a>
                 </div>
                 <div class="col">
-                  <a style="width: 100%;" class="btn btn-dark" href="/admin/detailProduct?product_id=<?php echo $product->getProductId(); ?>">Detail</a>
+                  <a style="width: 100%;" class="btn addUser" href="/admin/detailProduct?product_id=<?php echo $product->getProductId(); ?>">Detail</a>
                 </div>
                 <div class="col">
                   <form action="/admin/deleteProduct" method="post">
                     <input type="hidden" name="product_id" value="<?php echo $product->getProductId(); ?>">
-                    <button style="width: 100%;" type='submit' class="btn btn-dark">Delete</button>
+                    <button style="width: 100%;" type='submit' class="btn deleteUser">Delete</button>
                   </form>
                 </div>
               </div>
@@ -116,6 +174,11 @@ body {
           </div>
         </footer>
   </div>
+      </div>
+    </div>
+  </div>
+
+
 
 
 

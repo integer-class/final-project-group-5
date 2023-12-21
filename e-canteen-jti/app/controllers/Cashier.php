@@ -56,7 +56,7 @@ class Cashier {
         $salesTransactionDetail = new SalesTransactionDetail();
         $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($salesTransactionData->getSalesTransactionCode());
     
-        require_once '../app/views/admin/reportDetail.php';
+        require_once '../app/views/cashier/reportDetail.php';
     }
 
 
@@ -97,6 +97,17 @@ class Cashier {
         require_once '../app/views/cashier/productDetail.php';
     }
 
+    public function getReportByDate() {
+        if (isset($_POST['date'])) {
+            $salesTransaction = new SalesTransaction();
+            $salesTransaction->setSalesTransactionDate($_POST['date']);
+            $date = $salesTransaction->getSalesTransactionDate();
+            $salesTransactionData = $salesTransaction->getDataByDate($date);
+
+            require_once '../app/views/cashier/report.php';
+        }
+    }
+
     public function processSale() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['quantity'], $_POST['paid'], $_POST['user_id'])) {
@@ -106,12 +117,20 @@ class Cashier {
                 $sales_transaction_code = "TRANSACTION-" . strval(rand(100000, 999999));
                 
                 $totalAmount = 0;
-
+                $errorFlag = false; // Flag to track if there's an error
+                
                 foreach ($_POST['quantity'] as $productId => $quantity) {
                     $product = new Product();
                     $productData = $product->getDataById($productId); 
                     $productPrice = $productData ? $productData->getSellPrice() : 0;
-
+    
+                    // Check if requested quantity exceeds available stock
+                    if ($quantity > $productData->getStock()) {
+                        $errorFlag = true;
+                        echo "Error: Quantity for product exceeds available stock.<br>";
+                        break; // Exit loop immediately if there's an error
+                    }
+    
                     $detailData = [
                         'sales_transaction_code' => $sales_transaction_code,
                         'product_id' => $productId,
@@ -119,20 +138,32 @@ class Cashier {
                         'quantity' => $quantity,
                         'subtotal' => $quantity * $productPrice,
                     ];
-
+    
                     $totalAmount += $detailData['subtotal'];
                     $salesTransactionDetail->create($detailData);
-
+    
                     $updatedStock = $productData->getStock() - $quantity;
-
+    
                     $updateStockData = [
                         'product_id' => $productId,
                         'stock' => $updatedStock,
                     ];
-
+    
                     $product->updateStock($updateStockData);
                 }
-
+    
+                // Validate if paid amount is less than total amount
+                if ($_POST['paid'] < $totalAmount) {
+                    $errorFlag = true;
+                    echo "Error: Insufficient amount paid for the transaction.<br>";
+                }
+    
+                // If there's an error, stop further processing
+                if ($errorFlag) {
+                    echo "Transaction aborted due to stock shortage, invalid quantity, or insufficient payment.";
+                    return;
+                }
+    
                 $salesData = [
                     'sales_transaction_date' => date('Y-m-d'), 
                     'sales_transaction_code' => $sales_transaction_code,
@@ -143,9 +174,9 @@ class Cashier {
                 ];
                 
                 $salesTransaction->create($salesData);
-
+    
                 $salesTransactionDetailData = $salesTransactionDetail->getDataByTransactionCode($sales_transaction_code); 
-
+    
                 header('Location: /cashier/sales');
                 exit();
             } else {
@@ -155,6 +186,8 @@ class Cashier {
             echo "Invalid request method.";
         }
     }
+    
+    
 
 }
 
